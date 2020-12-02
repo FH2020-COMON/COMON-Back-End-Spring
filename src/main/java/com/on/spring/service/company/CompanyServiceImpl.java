@@ -4,6 +4,7 @@ import com.on.spring.entity.company.Company;
 import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.entity.user.User;
 import com.on.spring.entity.user.UserRepository;
+import com.on.spring.exception.CompanyNotFoundException;
 import com.on.spring.exception.UserNotFoundException;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,14 @@ public class CompanyServiceImpl implements CompanyService {
                 .users(users)
                 .build()
         );
+    }
+
+    @Override
+    public void addUserToCompany(String email, Long companyId) {
+        companyRepository.findByCompanyId(companyId)
+                .map(company -> company.addUser(userRepository.findByEmail(email)
+                            .orElseThrow(UserNotFoundException::new)))
+                .map(companyRepository::save)
+                .orElseThrow(CompanyNotFoundException::new);
     }
 }

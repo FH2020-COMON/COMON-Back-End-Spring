@@ -4,4 +4,5 @@ import com.on.spring.payload.request.RegisterCompanyRequest;
 
 public interface CompanyService {
     public void registerCompany(RegisterCompanyRequest request);
+    public void addUserToCompany(String email, Long companyId);
 }
