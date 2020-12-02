@@ -22,11 +22,22 @@ public class Company {
     @Column(nullable = false)
     private String ceoName;
 
+    @Column(nullable = false)
+    private String filePath;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = 'user')
     private List<User> users;
 
+    @Column(nullable = false)
+    private Long like;
+
     public Company addUser(User user) {
         users.add(user);
+        return this;
+    }
+
+    public Company addLike() {
+        this.like++;
         return this;
     }
 }
