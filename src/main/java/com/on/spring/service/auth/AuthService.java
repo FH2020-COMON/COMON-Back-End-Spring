@@ -1,4 +1,4 @@
-package com.on.spring.service;
+package com.on.spring.service.auth;
 
 import com.on.spring.payload.request.LoginRequest;
 import com.on.spring.payload.response.AccessTokenResponse;

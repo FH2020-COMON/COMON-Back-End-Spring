@@ -1,4 +1,4 @@
-package com.on.spring.service;
+package com.on.spring.service.auth;
 
 import com.on.spring.entity.refreshtoken.RefreshToken;
 import com.on.spring.entity.refreshtoken.RefreshTokenRepository;
