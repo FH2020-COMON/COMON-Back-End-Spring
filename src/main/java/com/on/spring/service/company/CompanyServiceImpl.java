@@ -12,7 +12,6 @@ import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.response.CompanyListResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

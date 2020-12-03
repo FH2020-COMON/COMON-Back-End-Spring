@@ -1,6 +1,5 @@
 package com.on.spring.controller.company;
 
-import com.on.spring.entity.company.Company;
 import com.on.spring.entity.user.User;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.response.CompanyListResponse;

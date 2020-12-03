@@ -25,7 +25,7 @@ public class Company {
     @Column(nullable = false)
     private String filePath;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = 'user')
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<User> users;
 
     @Column(nullable = false)
