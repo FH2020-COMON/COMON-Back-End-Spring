@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface CompanyService {
     public void registerCompany(RegisterCompanyRequest request);
-    public void addUserToCompany(String email, Long companyId);
+    // public void addUserToCompany(String email, Long companyId);
     public List<User> viewCompanyMember(Long companyId);
     public List<CompanyListResponse> companyList();
-    public void uploadCompanyIntroduceImage(MultipartFile file);
+    public void uploadCompanyIntroduceImage(List<MultipartFile> file, Long companyId);
+    public void companyLike(Long companyId);
 }

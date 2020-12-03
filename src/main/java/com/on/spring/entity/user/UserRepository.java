@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, String> {
     public Optional<User> findByEmail(String email);
     public List<User> findAllByCompanyId(Long companyId);
 }

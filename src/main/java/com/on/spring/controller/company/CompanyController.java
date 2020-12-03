@@ -1,13 +1,14 @@
 package com.on.spring.controller.company;
 
+import com.on.spring.entity.company.Company;
 import com.on.spring.entity.user.User;
 import com.on.spring.payload.request.RegisterCompanyRequest;
+import com.on.spring.payload.response.CompanyListResponse;
+import com.on.spring.payload.response.CompanyViewResponse;
 import com.on.spring.service.company.CompanyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,13 +18,33 @@ import java.util.List;
 public class CompanyController {
     private final CompanyService companyService;
 
-    @PostMapping("/")
-    public void registerCompany(RegisterCompanyRequest request) {
-
+    @GetMapping("/")
+    public List<CompanyListResponse> companyList() {
+        return companyService.companyList();
     }
 
-    @GetMapping("/")
-    public List<User> userList() {
-        return
+    @PostMapping("/")
+    public void registerCompany(RegisterCompanyRequest request) {
+        companyService.registerCompany(request);
+    }
+
+    @GetMapping("/{companyId}")
+    public CompanyViewResponse companyView(@PathVariable Long companyId) {
+        companyService.
+    }
+
+    @PostMapping("/{companyId}")
+    public void companyIntroduce(List<MultipartFile> files, @PathVariable long companyId) {
+        companyService.uploadCompanyIntroduceImage(files, companyId);
+    }
+
+    @PatchMapping("/{companyId}")
+    public void companyLike(@PathVariable long companyId) {
+        companyService.companyLike(companyId);
+    }
+
+    @GetMapping("/{companyId}/user")
+    public List<User> userList(@PathVariable long companyId) {
+        return companyService.viewCompanyMember(companyId);
     }
 }

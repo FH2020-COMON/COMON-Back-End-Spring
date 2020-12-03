@@ -14,13 +14,10 @@ import java.util.List;
 @Getter @AllArgsConstructor @NoArgsConstructor @Builder
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String email;
 
     @Column(nullable = false)
     private Long companyId;
-
-    @Column(unique = true, nullable = false)
-    private String email;
 
     @Column(nullable = false)
     private String name;

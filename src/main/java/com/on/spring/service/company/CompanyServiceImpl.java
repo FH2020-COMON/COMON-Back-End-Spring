@@ -2,17 +2,23 @@ package com.on.spring.service.company;
 
 import com.on.spring.entity.company.Company;
 import com.on.spring.entity.company.CompanyRepository;
+import com.on.spring.entity.companylike.CompanyLikeRepository;
 import com.on.spring.entity.user.User;
 import com.on.spring.entity.user.UserRepository;
 import com.on.spring.exception.CompanyNotFoundException;
+import com.on.spring.exception.InvalidTokenException;
 import com.on.spring.exception.UserNotFoundException;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.response.CompanyListResponse;
+import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +27,8 @@ import java.util.List;
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final UserRepository userRepository;
+    private final CompanyLikeRepository likeRepository;
+    private final AuthenticationFacade authenticationFacade;
 
     @Value("${spring.file.path}")
     private String filePath;
@@ -42,6 +50,7 @@ public class CompanyServiceImpl implements CompanyService {
         );
     }
 
+/*
     @Override
     public void addUserToCompany(String email, Long companyId) {
         companyRepository.findByCompanyId(companyId)
@@ -50,6 +59,8 @@ public class CompanyServiceImpl implements CompanyService {
                 .map(companyRepository::save)
                 .orElseThrow(CompanyNotFoundException::new);
     }
+
+ */
 
     @Override
     public List<User> viewCompanyMember(Long companyId) {
@@ -68,7 +79,28 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void uploadCompanyIntroduceImage(MultipartFile file) {
-        
+    public void uploadCompanyIntroduceImage(List<MultipartFile> files, Long companyId) {
+        int cur = 1;
+
+        try {
+            for (MultipartFile file : files) {
+                file.transferTo(new File(filePath + companyId + "/" + cur + ".jpg"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void companyLike(Long companyId) {
+        userRepository.findByEmail(authenticationFacade.getUserEmail())
+                .map(user -> {
+                    likeRepository.findAllByCompanyIdAndUserId(companyId, user.getEmail());
+                    return companyRepository.findByCompanyId(companyId)
+                            .map(Company::addLike)
+                            .map(companyRepository::save)
+                            .orElseThrow(CompanyNotFoundException::new);
+                })
+                .orElseThrow(InvalidTokenException::new);
     }
 }
