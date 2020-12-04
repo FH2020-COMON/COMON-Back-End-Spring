@@ -5,7 +5,7 @@ import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.request.UploadBoardRequest;
 import com.on.spring.payload.response.BoardResponse;
-import com.on.spring.payload.response.CompanyListResponse;
+import com.on.spring.payload.response.ApplyListResponse;
 import com.on.spring.payload.response.WorkResponse;
 import com.on.spring.service.company.CompanyService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @GetMapping("/")
-    public List<CompanyListResponse> companyList() {
+    public List<ApplyListResponse> companyList() {
         return companyService.companyList();
     }
 

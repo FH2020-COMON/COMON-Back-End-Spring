@@ -6,6 +6,7 @@ import com.on.spring.exception.ApplyNotFoundException;
 import com.on.spring.exception.FileIsNotFoundException;
 import com.on.spring.payload.request.AddApplyRequest;
 import com.on.spring.payload.response.ApplyResponse;
+import com.on.spring.payload.response.ApplyListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mock.web.MockMultipartFile;
@@ -64,7 +65,12 @@ public class ApplyServiceImpl implements ApplyService {
         return applyRepository.findByApplyId(applyId)
                 .map(apply -> {
                     Duration diffTime = Duration.between(apply.getDate(), LocalDateTime.now());
-                    return new ApplyResponse(apply.getCompanyId(), apply.getCompanyName(), diffTime.toString());
+                    return ApplyResponse.builder()
+                            .applyName(apply.getApplyName())
+                            .companyName(apply.getCompanyName())
+                            .date(diffTime.toString())
+                            .hashTag(apply.getHashTag())
+                            .build();
                 })
                 .orElseThrow(ApplyNotFoundException::new);
     }
@@ -99,5 +105,24 @@ public class ApplyServiceImpl implements ApplyService {
                     }
                 })
                 .orElseThrow(ApplyNotFoundException::new);
+    }
+
+    @Override
+    public List<ApplyListResponse> companyApplyView() {
+        List<ApplyListResponse> responses = new ArrayList<>();
+        applyRepository.findAll().forEach(apply ->  {
+            Duration diffTime = Duration.between(apply.getDate(), LocalDateTime.now());
+
+            responses.add(
+                ApplyListResponse.builder()
+                    .applyName(apply.getApplyName())
+                    .companyName(apply.getCompanyName())
+                    .companyId(apply.getCompanyId())
+                    .dDay(diffTime.toDays())
+                    .build()
+            );
+        });
+
+        return responses;
     }
 }

@@ -15,10 +15,16 @@ public class Apply {
     private Long applyId;
 
     @Column(nullable = false)
+    private String applyName;
+
+    @Column(nullable = false)
     private String companyName;
 
     @Column(nullable = false)
     private Long companyId;
+
+    @Column(nullable = false)
+    private String hashTag;
 
     @Column(nullable = false)
     private LocalDateTime date;
