@@ -5,6 +5,9 @@ import com.on.spring.payload.response.ApplyResponse;
 import com.on.spring.service.apply.ApplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/apply")
@@ -12,9 +15,20 @@ import org.springframework.web.bind.annotation.*;
 public class ApplyController {
     private final ApplyService applyService;
 
-    @GetMapping("/image/{applyId}")
+    @GetMapping("/{applyId}")
     public ApplyResponse viewApply(@PathVariable Long applyId) {
-        applyService.view;
+        return applyService.viewApply(applyId);
+    }
+
+
+    @GetMapping("/image/{applyId}")
+    public List<MultipartFile> viewApplyImages(@PathVariable Long applyId) {
+        return applyService.viewApplyImages(applyId);
+    }
+
+    @GetMapping("/image/preview/{applyId}")
+    public MultipartFile viewApplyPreview(@PathVariable Long applyId) {
+        return applyService.viewApplyPreview(applyId);
     }
 
     @PostMapping

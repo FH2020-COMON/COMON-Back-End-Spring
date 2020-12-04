@@ -90,7 +90,7 @@ public class ApplyServiceImpl implements ApplyService {
                     int cur = apply.getImageNum();
                     try {
                         for (int i = 1; i <= apply.getApplyId(); i++) {
-                            MultipartFile file = new MockMultipartFile("preview.png", new FileInputStream(filePath + applyId + "/" + cur + ".png"));
+                            MultipartFile file = new MockMultipartFile(cur + ".png", new FileInputStream(filePath + applyId + "/" + cur + ".png"));
                             files.add(file);
                         }
                         return files;
