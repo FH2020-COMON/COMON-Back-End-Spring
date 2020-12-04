@@ -18,6 +18,6 @@ public class Board {
     private String name;
 
     @ManyToOne
-    @JoinColumn("category")
+    @JoinColumn(name = "category")
     private Category category;
 }

@@ -31,7 +31,7 @@ public class User {
     private UserType userType;
 
     @ManyToOne
-    @JoinColumn("company")
+    @JoinColumn(name = "company")
     private Company company;
 
     public User addGlass(Grass grass) {

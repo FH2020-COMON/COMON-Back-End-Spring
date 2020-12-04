@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity("company_likes")
+@Entity(name = "company_likes")
 @Getter @AllArgsConstructor @NoArgsConstructor
 public class CompanyLike {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,6 @@ public class CompanyLike {
     private String userId;
 
     @ManyToOne
-    @JoinColumn("user")
+    @JoinColumn(name = "user")
     private User user;
 }
