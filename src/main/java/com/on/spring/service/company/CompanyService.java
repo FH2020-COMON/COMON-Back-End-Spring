@@ -23,4 +23,5 @@ public interface CompanyService {
     public void addWorks(AddWorkRequest request, String userId);
     public List<BoardResponse> viewBoardList(long companyId);
     public void uploadBoard(UploadBoardRequest request, Long companyId);
+    public MultipartFile viewBoard(Long companyId, Long boardId);
 }

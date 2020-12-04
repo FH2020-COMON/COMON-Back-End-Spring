@@ -19,10 +19,12 @@ import com.on.spring.payload.response.WorkResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -151,9 +153,22 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void uploadBoard(UploadBoardRequest request, Long companyId) {
         try {
-            request.getFile().transferTo(new File(filePath + "board" + companyId + "/" + "README.md"));
+            request.getFile().transferTo(new File(filePath + "board" + companyId + "/" + "read.md"));
         } catch (IOException e) {
             throw new FileUploadFailedException();
         }
+    }
+
+    @Override
+    public MultipartFile viewBoard(Long companyId, Long boardId) {
+        MultipartFile file;
+
+        try {
+            file = new MockMultipartFile("read.md", new FileInputStream(filePath + companyId + "/" + "read.md"));
+        } catch (IOException e) {
+            throw new FileIsNotFoundException();
+        }
+
+        return file;
     }
 }
