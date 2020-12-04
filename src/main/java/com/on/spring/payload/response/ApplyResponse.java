@@ -10,4 +10,5 @@ public class ApplyResponse {
     private String applyName;
     private String companyName;
     private String date;
+    private String hashTag;
 }

@@ -39,6 +39,7 @@ public class ApplyServiceImpl implements ApplyService {
                         .companyName(request.getCompanyName())
                         .date(LocalDateTime.of(request.getYear(), request.getMonth(), request.getDay(), request.getHour(), request.getMinute()))
                         .imageNum(0)
+                        .hashTag(request.getHashTag())
                         .build()
         );
 
