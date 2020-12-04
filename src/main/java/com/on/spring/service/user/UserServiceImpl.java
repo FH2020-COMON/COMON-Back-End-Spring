@@ -1,5 +1,6 @@
 package com.on.spring.service.user;
 
+import com.on.spring.entity.grass.Grass;
 import com.on.spring.entity.user.User;
 import com.on.spring.entity.user.UserRepository;
 import com.on.spring.exception.UserNotFoundException;
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
                 .map(user -> {
                     List<GrassResponse> response = new ArrayList<>();
 
-                    for (var grass : user.getGrasses()) {
+                    for (Grass grass : user.getGrasses()) {
                         response.add(new GrassResponse(grass.getCreatedDateAt().toString(), grass.getInformation()));
                     }
 

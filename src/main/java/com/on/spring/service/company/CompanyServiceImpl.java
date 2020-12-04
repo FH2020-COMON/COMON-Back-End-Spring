@@ -10,6 +10,7 @@ import com.on.spring.entity.work.WorkRepository;
 import com.on.spring.exception.*;
 import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
+import com.on.spring.payload.response.BoardResponse;
 import com.on.spring.payload.response.CompanyListResponse;
 import com.on.spring.payload.response.WorkResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
@@ -20,13 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -115,7 +112,7 @@ public class CompanyServiceImpl implements CompanyService {
         List<Work> works = workRepository.findAllByTargetUserEmail(userEmail);
         List<WorkResponse> workResponses = new ArrayList<>();
 
-        for (var work : works) {
+        for (Work work : works) {
             Duration duration = Duration.between(work.getDate(), LocalDateTime.now());
             workResponses.add(new WorkResponse(work.getWorkName(), work.getWorkContent(), duration.toString()));
         }
@@ -134,5 +131,10 @@ public class CompanyServiceImpl implements CompanyService {
                             .workContent(request.getWorkContent())
                             .build()
         );
+    }
+
+    @Override
+    public List<BoardResponse> viewBoardList(long companyId) {
+
     }
 }

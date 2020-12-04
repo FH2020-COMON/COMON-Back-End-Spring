@@ -35,5 +35,4 @@ public class ApplyController {
     public void addApply(AddApplyRequest request) {
         applyService.uploadApply(request);
     }
-
 }
