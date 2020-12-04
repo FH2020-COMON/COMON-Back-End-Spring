@@ -23,7 +23,7 @@ public class Company {
     @Column(nullable = false)
     private String ceoName;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", targetEntity = User.class)
     private final List<User> users = new ArrayList<>();
 
     @Column(nullable = false)

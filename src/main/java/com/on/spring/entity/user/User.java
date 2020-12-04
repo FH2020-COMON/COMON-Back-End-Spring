@@ -23,7 +23,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grass")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grass", targetEntity = Grass.class)
     private final List<Grass> grasses = new ArrayList<>();
 
     @Column
