@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 public class ApplyListResponse {
     private String companyName;
     private String applyName;
-    private Long companyId;
+    private Long applyId;
     private Long dDay;
 }

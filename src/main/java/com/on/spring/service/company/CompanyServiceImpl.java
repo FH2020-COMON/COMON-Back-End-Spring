@@ -16,7 +16,6 @@ import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.request.UploadBoardRequest;
 import com.on.spring.payload.response.BoardResponse;
-import com.on.spring.payload.response.ApplyListResponse;
 import com.on.spring.payload.response.WorkResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
@@ -81,17 +80,6 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.findByCompanyId(companyId)
                 .map(Company::getUsers)
                 .orElseThrow(CompanyNotFoundException::new);
-    }
-
-    @Override
-    public List<ApplyListResponse> companyList() {
-        List<ApplyListResponse> responses = new ArrayList<>();
-
-        for (Company company : companyRepository.findAll()) {
-            responses.add(new ApplyListResponse(company.getCompanyName(), company.getCompanyId(), filePath + company.getCompanyId() + "/preview.png"));
-        }
-
-        return responses;
     }
 
     @Override

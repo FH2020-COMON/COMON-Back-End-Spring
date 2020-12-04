@@ -20,11 +20,6 @@ import java.util.List;
 public class CompanyController {
     private final CompanyService companyService;
 
-    @GetMapping("/")
-    public List<ApplyListResponse> companyList() {
-        return companyService.companyList();
-    }
-
     @PostMapping("/")
     public void registerCompany(RegisterCompanyRequest request) {
         companyService.registerCompany(request);

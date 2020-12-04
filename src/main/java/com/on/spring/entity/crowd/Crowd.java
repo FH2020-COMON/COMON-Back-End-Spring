@@ -21,7 +21,4 @@ public class Crowd {
 
     @Column(nullable = false)
     private int nowAmount;
-
-    @Column(nullable = false)
-    private String content;
 }
