@@ -2,6 +2,7 @@ package com.on.spring.entity.category;
 
 import com.on.spring.entity.board.Board;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Getter
+@AllArgsConstructor @NoArgsConstructor @Getter @Builder
 public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;

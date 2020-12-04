@@ -147,7 +147,7 @@ public class CompanyServiceImpl implements CompanyService {
         List<BoardResponse> responses = new ArrayList<>();
 
         for (Board board : boardRepository.findAllByCompanyId(companyId)) {
-            responses.add(new BoardResponse(board.getName(), board.getFilePath()));
+            responses.add(new BoardResponse(board.getName(), board.getId()));
         }
 
         return responses;
@@ -155,22 +155,41 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void uploadBoard(UploadBoardRequest request, Long companyId) {
+        Board board = null;
+        Category targetCategory = null;
+
         for (Category category : categoryRepository.findAllByCompanyId(companyId)) {
-            if (request.getBoardName().equals(category.getCategoryName())) {
-                categoryRepository.save(
-                        category.addBoard(
-                                Board.builder()
-                                .name(request.getBoardName())
-                                .category(category)
-                                .build()
-                        );
-                )
-            }
+            if (request.getBoardName().equals(category.getCategoryName()))
+                targetCategory = category;
                 break;
         }
 
+        if (targetCategory != null) {
+            board = boardRepository.save(
+                    Board.builder()
+                            .name(request.getBoardName())
+                            .category(targetCategory)
+                            .build()
+            );
+        }
+        else {
+            targetCategory = categoryRepository.save(
+                    Category.builder()
+                    .categoryName(request.getCategory())
+                    .companyId(companyId)
+                    .build()
+            );
+
+            board = boardRepository.save(
+                    Board.builder()
+                    .name(request.getBoardName())
+                    .category(targetCategory)
+                    .build()
+            );
+        }
+
         try {
-            request.getFile().transferTo(new File(filePath + "board" + companyId + "/" + "read.md"));
+            request.getFile().transferTo(new File(filePath + "board" + companyId + "/" + board.getId() + "/" + "read.md"));
         } catch (IOException e) {
             throw new FileUploadFailedException();
         }
@@ -181,7 +200,7 @@ public class CompanyServiceImpl implements CompanyService {
         MultipartFile file;
 
         try {
-            file = new MockMultipartFile("read.md", new FileInputStream(filePath + companyId + "/" + "read.md"));
+            file = new MockMultipartFile("read.md", new FileInputStream(filePath + companyId + "/" + boardId + "/" + "read.md"));
         } catch (IOException e) {
             throw new FileIsNotFoundException();
         }
