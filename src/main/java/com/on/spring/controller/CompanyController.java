@@ -3,6 +3,7 @@ package com.on.spring.controller;
 import com.on.spring.entity.user.User;
 import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
+import com.on.spring.payload.request.UploadBoardRequest;
 import com.on.spring.payload.response.BoardResponse;
 import com.on.spring.payload.response.CompanyListResponse;
 import com.on.spring.payload.response.CompanyApplyViewResponse;
@@ -56,13 +57,13 @@ public class CompanyController {
     }
 
     @PostMapping("/{companyId}/board")
-    public void uploadBoard(@PathVariable long companyId) {
-
+    public void uploadBoard(UploadBoardRequest request, @PathVariable long companyId) {
+        companyService.uploadBoard(request, companyId);
     }
 
     @GetMapping("/{companyId}/board/{boardId}")
     public MultipartFile viewBoard(@PathVariable long companyId, @PathVariable long boardId) {
-        return 
+
     }
 
     @GetMapping("/work/{userId}")

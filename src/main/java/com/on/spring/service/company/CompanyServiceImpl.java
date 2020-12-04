@@ -12,6 +12,7 @@ import com.on.spring.entity.work.WorkRepository;
 import com.on.spring.exception.*;
 import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
+import com.on.spring.payload.request.UploadBoardRequest;
 import com.on.spring.payload.response.BoardResponse;
 import com.on.spring.payload.response.CompanyListResponse;
 import com.on.spring.payload.response.WorkResponse;
@@ -93,7 +94,7 @@ public class CompanyServiceImpl implements CompanyService {
         try {
             file.transferTo(new File(filePath + "company/" + companyId + "/" + "preview.png"));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new FileUploadFailedException();
         }
     }
 
@@ -145,5 +146,14 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         return responses;
+    }
+
+    @Override
+    public void uploadBoard(UploadBoardRequest request, Long companyId) {
+        try {
+            request.getFile().transferTo(new File(filePath + "board" + companyId + "/" + "README.md"));
+        } catch (IOException e) {
+            throw new FileUploadFailedException();
+        }
     }
 }

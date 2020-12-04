@@ -3,6 +3,7 @@ package com.on.spring.service.company;
 import com.on.spring.entity.user.User;
 import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
+import com.on.spring.payload.request.UploadBoardRequest;
 import com.on.spring.payload.response.BoardResponse;
 import com.on.spring.payload.response.CompanyListResponse;
 import com.on.spring.payload.response.WorkResponse;
@@ -21,4 +22,5 @@ public interface CompanyService {
     public List<WorkResponse> viewWorks(String userEmail);
     public void addWorks(AddWorkRequest request, String userId);
     public List<BoardResponse> viewBoardList(long companyId);
+    public void uploadBoard(UploadBoardRequest request, Long companyId);
 }
