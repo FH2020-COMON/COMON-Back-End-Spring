@@ -17,8 +17,17 @@ public class Crowd {
     private String companyName;
 
     @Column(nullable = false)
+    private String hashTag;
+
+    @Column(nullable = false)
+    private String crowdName;
+
+    @Column(nullable = false)
     private int destinationAmount;
 
     @Column(nullable = false)
     private int nowAmount;
+
+    @Column(nullable = false)
+    private int imageNum;
 }
