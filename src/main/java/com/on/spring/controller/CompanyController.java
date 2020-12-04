@@ -52,12 +52,17 @@ public class CompanyController {
 
     @GetMapping("/{companyId}/board")
     public List<BoardResponse> viewBoardList(@PathVariable long companyId) {
-        return companyService.
+        return companyService.viewBoardList(companyId);
+    }
+
+    @PostMapping("/{companyId}/board")
+    public void uploadBoard(@PathVariable long companyId) {
+
     }
 
     @GetMapping("/{companyId}/board/{boardId}")
     public MultipartFile viewBoard(@PathVariable long companyId, @PathVariable long boardId) {
-        return
+        return 
     }
 
     @GetMapping("/work/{userId}")

@@ -7,7 +7,5 @@ import lombok.NoArgsConstructor;
 @Getter @AllArgsConstructor @NoArgsConstructor
 public class BoardResponse {
     private String boardName;
-    private String writer;
-    private String dateTime;
     private String filePath;
 }

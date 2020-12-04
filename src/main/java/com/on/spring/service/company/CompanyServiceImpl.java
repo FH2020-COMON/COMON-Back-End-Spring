@@ -1,5 +1,7 @@
 package com.on.spring.service.company;
 
+import com.on.spring.entity.board.Board;
+import com.on.spring.entity.board.BoardRepository;
 import com.on.spring.entity.company.Company;
 import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.entity.companylike.CompanyLikeRepository;
@@ -34,6 +36,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyLikeRepository likeRepository;
     private final AuthenticationFacade authenticationFacade;
     private final WorkRepository workRepository;
+    private final BoardRepository boardRepository;
 
     @Value("${spring.file.path}")
     private String filePath;
@@ -135,6 +138,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<BoardResponse> viewBoardList(long companyId) {
+        List<BoardResponse> responses = new ArrayList<>();
 
+        for (Board board : boardRepository.findAllByCompanyId(companyId)) {
+            responses.add(new BoardResponse(board.getName(), board.getFilePath()));
+        }
+
+        return responses;
     }
 }
