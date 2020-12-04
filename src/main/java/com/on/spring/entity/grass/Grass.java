@@ -1,4 +1,4 @@
-package com.on.spring.entity.glass;
+package com.on.spring.entity.grass;
 
 import com.on.spring.entity.user.User;
 import lombok.AllArgsConstructor;

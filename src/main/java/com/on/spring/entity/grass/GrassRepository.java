@@ -1,4 +1,4 @@
-package com.on.spring.entity.glass;
+package com.on.spring.entity.grass;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

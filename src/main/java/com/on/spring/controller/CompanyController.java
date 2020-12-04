@@ -5,6 +5,7 @@ import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.response.BoardResponse;
 import com.on.spring.payload.response.CompanyListResponse;
 import com.on.spring.payload.response.CompanyApplyViewResponse;
+import com.on.spring.payload.response.WorkResponse;
 import com.on.spring.service.company.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +54,12 @@ public class CompanyController {
 
     }
 
-    @PostMapping("/{companyId}/{userId}")
+    @GetMapping("/work/{userId}")
+    public List<WorkResponse> viewWorks(@PathVariable String userId) {
+        return companyService.viewWorks(userId);
+    }
+
+    @PostMapping("/{companyId}/work/{userId}")
     public void addWork(@PathVariable Long companyId, @PathVariable String userId) {
 
     }

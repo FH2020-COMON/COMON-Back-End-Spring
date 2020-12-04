@@ -5,6 +5,7 @@ import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.entity.companylike.CompanyLikeRepository;
 import com.on.spring.entity.user.User;
 import com.on.spring.entity.user.UserRepository;
+import com.on.spring.entity.work.Work;
 import com.on.spring.entity.work.WorkRepository;
 import com.on.spring.exception.CompanyNotFoundException;
 import com.on.spring.exception.InvalidTokenException;
@@ -106,20 +107,19 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<WorkResponse> viewWork(Long companyId, String userEmail) {
-        return companyRepository.findByCompanyId(companyId)
-                .map(userRepository::findByCompany)
-                .map(user -> user.map(User::getEmail).orElseThrow(UserNotFoundException::new))
-                .map(workRepository::findAllByTargetUserEmail)
-                .map(works -> {
-                    List<WorkResponse> workResponses = new ArrayList<>();
+    public List<WorkResponse> viewWorks(String userEmail) {
+        List<Work> works = workRepository.findAllByTargetUserEmail(userEmail);
+        List<WorkResponse> workResponses = new ArrayList<>();
 
-                    for (var work : works) {
-                        workResponses.add(new WorkResponse(work.getWorkName(), work.getWorkContent(), work.getDate().toString()));
-                    }
+        for (var work : works) {
+            workResponses.add(new WorkResponse(work.getWorkName(), work.getWorkContent(), work.getDate().toString()));
+        }
 
-                    return workResponses;
-                })
-                .orElseThrow(CompanyNotFoundException::new);
+        return workResponses;
+    }
+
+    @Override
+    public void addWorks(Long companyId, String userId) {
+        return workRepository.findAllByTargetUserEmail()
     }
 }

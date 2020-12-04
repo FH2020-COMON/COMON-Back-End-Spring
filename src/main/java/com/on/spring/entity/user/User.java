@@ -1,7 +1,7 @@
 package com.on.spring.entity.user;
 
 import com.on.spring.entity.company.Company;
-import com.on.spring.entity.glass.Grass;
+import com.on.spring.entity.grass.Grass;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.List;
 @Entity(name = "user")
 @Getter @AllArgsConstructor @NoArgsConstructor @Builder
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private String email;
 
     @Column(nullable = false)
