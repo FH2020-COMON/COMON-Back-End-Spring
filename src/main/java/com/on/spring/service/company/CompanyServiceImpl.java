@@ -62,7 +62,7 @@ public class CompanyServiceImpl implements CompanyService {
                 Company.builder()
                 .ceoName(request.getCeoName())
                 .companyName(request.getCompanyName())
-                .ceoName(request.getCeoName()).like(0L)
+                .ceoName(request.getCeoName()).likes(0L)
                 .build()
         );
     }

@@ -27,7 +27,7 @@ public class Company {
     private final List<User> users = new ArrayList<>();
 
     @Column(nullable = false)
-    private Long like;
+    private Long likes;
 
     public Company addUser(User user) {
         users.add(user);
@@ -35,7 +35,7 @@ public class Company {
     }
 
     public Company addLike() {
-        this.like++;
+        this.likes++;
         return this;
     }
 }
