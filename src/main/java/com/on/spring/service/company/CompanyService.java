@@ -18,5 +18,5 @@ public interface CompanyService {
     public void uploadCompanyPreviewImage(MultipartFile file, Long companyId);
     public void companyLike(Long companyId);
     public List<WorkResponse> viewWorks(String userEmail);
-    public void addWorks(AddWorkRequest request, String userId) throws ParseException;
+    public void addWorks(AddWorkRequest request, String userId);
 }

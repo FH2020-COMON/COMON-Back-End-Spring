@@ -7,10 +7,7 @@ import com.on.spring.entity.user.User;
 import com.on.spring.entity.user.UserRepository;
 import com.on.spring.entity.work.Work;
 import com.on.spring.entity.work.WorkRepository;
-import com.on.spring.exception.CompanyNotFoundException;
-import com.on.spring.exception.InvalidTokenException;
-import com.on.spring.exception.UserNotFoundException;
-import com.on.spring.exception.UserNotOwnerException;
+import com.on.spring.exception.*;
 import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.response.CompanyListResponse;
@@ -123,17 +120,21 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void addWorks(AddWorkRequest request, String userId) throws ParseException {
+    public void addWorks(AddWorkRequest request, String userId) {
         SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        workRepository.save(
-                Work.builder()
-                .requestId(request.getRequestId())
-                .targetUserEmail(userId)
-                .workName(request.getWorkName())
-                .date(transFormat.parse(request.getDate()))
-                .workContent(request.getWorkContent())
-                .build()
-        );
+        try {
+            workRepository.save(
+                    Work.builder()
+                            .requestId(request.getRequestId())
+                            .targetUserEmail(userId)
+                            .workName(request.getWorkName())
+                            .date(transFormat.parse(request.getDate()))
+                            .workContent(request.getWorkContent())
+                            .build()
+            );
+        } catch (ParseException e) {
+            throw new AddWorkFailedException();
+        }
     }
 }
