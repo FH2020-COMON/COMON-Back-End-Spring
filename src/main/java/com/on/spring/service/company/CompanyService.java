@@ -3,6 +3,7 @@ package com.on.spring.service.company;
 import com.on.spring.entity.user.User;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.response.CompanyListResponse;
+import com.on.spring.payload.response.WorkResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -14,5 +15,6 @@ public interface CompanyService {
     public List<CompanyListResponse> companyList();
     public void uploadCompanyPreviewImage(MultipartFile file, Long companyId);
     public void companyLike(Long companyId);
+    public List<WorkResponse> viewWork(Long companyId, String userEmail)
     public void addWork(Long companyId, String userId);
 }

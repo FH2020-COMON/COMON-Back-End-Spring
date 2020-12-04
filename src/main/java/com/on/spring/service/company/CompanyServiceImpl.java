@@ -5,12 +5,14 @@ import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.entity.companylike.CompanyLikeRepository;
 import com.on.spring.entity.user.User;
 import com.on.spring.entity.user.UserRepository;
+import com.on.spring.entity.work.WorkRepository;
 import com.on.spring.exception.CompanyNotFoundException;
 import com.on.spring.exception.InvalidTokenException;
 import com.on.spring.exception.UserNotFoundException;
 import com.on.spring.exception.UserNotOwnerException;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.response.CompanyListResponse;
+import com.on.spring.payload.response.WorkResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final UserRepository userRepository;
     private final CompanyLikeRepository likeRepository;
     private final AuthenticationFacade authenticationFacade;
+    private final WorkRepository workRepository;
 
     @Value("${spring.file.path}")
     private String filePath;
@@ -103,7 +106,20 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void addWork(Long companyId, String userId) {
-        companyRepository.findByCompanyId()
+    public List<WorkResponse> viewWork(Long companyId, String userEmail) {
+        return companyRepository.findByCompanyId(companyId)
+                .map(userRepository::findByCompany)
+                .map(user -> user.map(User::getEmail).orElseThrow(UserNotFoundException::new))
+                .map(workRepository::findAllByTargetUserEmail)
+                .map(works -> {
+                    List<WorkResponse> workResponses = new ArrayList<>();
+
+                    for (var work : works) {
+                        workResponses.add(new WorkResponse(work.getWorkName(), work.getWorkContent(), work.getDate().toString()));
+                    }
+
+                    return workResponses;
+                })
+                .orElseThrow(CompanyNotFoundException::new);
     }
 }
