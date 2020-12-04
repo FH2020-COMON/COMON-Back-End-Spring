@@ -15,6 +15,9 @@ public class Board {
     private Long id;
 
     @Column(nullable = false)
+    private Long companyId;
+
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne
