@@ -4,6 +4,7 @@ import com.on.spring.entity.apply.Apply;
 import com.on.spring.entity.apply.ApplyRepository;
 import com.on.spring.exception.AddApplyFailedException;
 import com.on.spring.payload.request.AddApplyRequest;
+import com.on.spring.payload.response.ApplyResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,13 @@ public class ApplyServiceImpl implements ApplyService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ApplyResponse viewApply(Long applyId) {
+        applyRepository.findByApplyId(applyId)
+                .map(apply -> {
+                    Long time = 
+                    return new ApplyResponse(apply.getCompanyId(), apply.getCompanyName(), apply.);
+                })
     }
 }
