@@ -4,10 +4,7 @@ import com.on.spring.payload.request.RegisterRequest;
 import com.on.spring.payload.response.GrassResponse;
 import com.on.spring.service.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void register(@Valid RegisterRequest request) {
+    public void register(@RequestBody @Valid RegisterRequest request) {
         userService.register(request);
     }
 }

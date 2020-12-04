@@ -20,12 +20,12 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping("/")
-    public void registerCompany(RegisterCompanyRequest request) {
+    public void registerCompany(@RequestBody RegisterCompanyRequest request) {
         companyService.registerCompany(request);
     }
 
     @PostMapping("/{companyId}")
-    public void companyLogo(MultipartFile file, @PathVariable long companyId) {
+    public void companyLogo(@RequestBody MultipartFile file, @PathVariable long companyId) {
         companyService.uploadCompanyPreviewImage(file, companyId);
     }
 
@@ -45,7 +45,7 @@ public class CompanyController {
     }
 
     @PostMapping("/{companyId}/board")
-    public void uploadBoard(UploadBoardRequest request, @PathVariable long companyId) {
+    public void uploadBoard(@RequestBody UploadBoardRequest request, @PathVariable long companyId) {
         companyService.uploadBoard(request, companyId);
     }
 
@@ -60,7 +60,7 @@ public class CompanyController {
     }
 
     @PostMapping("/work/{userId}")
-    public void addWork(AddWorkRequest request, @PathVariable String userId) {
+    public void addWork(@RequestBody AddWorkRequest request, @PathVariable String userId) {
         companyService.addWorks(request, userId);
     }
 }

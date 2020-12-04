@@ -37,7 +37,7 @@ public class ApplyController {
     }
 
     @PostMapping
-    public void addApply(AddApplyRequest request) {
+    public void addApply(@RequestBody AddApplyRequest request) {
         applyService.uploadApply(request);
     }
 }
