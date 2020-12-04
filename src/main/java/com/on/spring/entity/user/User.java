@@ -24,7 +24,7 @@ public class User {
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "grass")
-    private List<Grass> grasses = new ArrayList<>();
+    private final List<Grass> grasses = new ArrayList<>();
 
     @Column
     @Enumerated(EnumType.STRING)

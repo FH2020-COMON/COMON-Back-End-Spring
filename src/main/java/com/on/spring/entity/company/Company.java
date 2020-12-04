@@ -24,7 +24,7 @@ public class Company {
     private String ceoName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<User> users = new ArrayList<>();
+    private final List<User> users = new ArrayList<>();
 
     @Column(nullable = false)
     private Long like;
