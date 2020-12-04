@@ -117,7 +117,7 @@ public class CompanyServiceImpl implements CompanyService {
     public void companyLike(Long companyId) {
         userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .map(user -> {
-                    if (!likeRepository.findByCompanyIdAndUserId(companyId, authenticationFacade.getUserEmail()).isPresent()) {
+                    if (!likeRepository.findByCompanyIdAndUserEmail(companyId, authenticationFacade.getUserEmail()).isPresent()) {
                         return companyRepository.findByCompanyId(companyId)
                                 .map(Company::addLike)
                                 .map(companyRepository::save)

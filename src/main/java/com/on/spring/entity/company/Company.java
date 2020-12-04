@@ -23,7 +23,7 @@ public class Company {
     @Column(nullable = false)
     private String ceoName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private final List<User> users = new ArrayList<>();
 
     @Column(nullable = false)
