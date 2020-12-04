@@ -31,11 +31,6 @@ public class CompanyController {
         companyService.registerCompany(request);
     }
 
-    @GetMapping("/{companyId}")
-    public CompanyApplyViewResponse companyApplyView(@PathVariable Long companyId) {
-        companyService.view
-    }
-
     @PostMapping("/{companyId}")
     public void companyLogo(MultipartFile file, @PathVariable long companyId) {
         companyService.uploadCompanyPreviewImage(file, companyId);

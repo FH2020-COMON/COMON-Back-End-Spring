@@ -2,6 +2,7 @@ package com.on.spring.controller;
 
 import com.on.spring.payload.request.AddApplyRequest;
 import com.on.spring.payload.response.ApplyResponse;
+import com.on.spring.payload.response.CompanyApplyViewResponse;
 import com.on.spring.service.apply.ApplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +35,10 @@ public class ApplyController {
     @PostMapping
     public void addApply(AddApplyRequest request) {
         applyService.uploadApply(request);
+    }
+
+    @GetMapping("/{companyId}")
+    public CompanyApplyViewResponse companyApplyView(@PathVariable Long companyId) {
+        applyService
     }
 }

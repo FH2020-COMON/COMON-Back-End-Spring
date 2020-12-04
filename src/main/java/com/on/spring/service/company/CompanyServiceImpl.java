@@ -2,6 +2,8 @@ package com.on.spring.service.company;
 
 import com.on.spring.entity.board.Board;
 import com.on.spring.entity.board.BoardRepository;
+import com.on.spring.entity.category.Category;
+import com.on.spring.entity.category.CategoryRepository;
 import com.on.spring.entity.company.Company;
 import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.entity.companylike.CompanyLikeRepository;
@@ -40,6 +42,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final AuthenticationFacade authenticationFacade;
     private final WorkRepository workRepository;
     private final BoardRepository boardRepository;
+    private final CategoryRepository categoryRepository;
 
     @Value("${spring.file.path}")
     private String filePath;
@@ -152,6 +155,20 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void uploadBoard(UploadBoardRequest request, Long companyId) {
+        for (Category category : categoryRepository.findAllByCompanyId(companyId)) {
+            if (request.getBoardName().equals(category.getCategoryName())) {
+                categoryRepository.save(
+                        category.addBoard(
+                                Board.builder()
+                                .name(request.getBoardName())
+                                .category(category)
+                                .build()
+                        );
+                )
+            }
+                break;
+        }
+
         try {
             request.getFile().transferTo(new File(filePath + "board" + companyId + "/" + "read.md"));
         } catch (IOException e) {

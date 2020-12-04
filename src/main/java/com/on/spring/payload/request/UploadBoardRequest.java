@@ -8,5 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter @AllArgsConstructor @NoArgsConstructor
 public class UploadBoardRequest {
     private String boardName;
+    private String category;
     private MultipartFile file;
 }
