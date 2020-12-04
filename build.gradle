@@ -22,7 +22,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.4.0'
     compileOnly 'org.projectlombok:lombok'
     compile('org.springframework.boot:spring-boot-starter-data-redis')
     runtimeOnly 'mysql:mysql-connector-java'
@@ -35,7 +36,6 @@ dependencies {
     // validation
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.4.0'
-
 }
 
 test {

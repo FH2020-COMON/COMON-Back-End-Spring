@@ -9,6 +9,7 @@ import com.on.spring.payload.request.RegisterRequest;
 import com.on.spring.payload.response.GrassResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthenticationFacade authenticationFacade;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<GrassResponse> viewUserGrass(String userId) {
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserService {
                 User.builder()
                 .email(request.getEmail())
                 .name(request.getName())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .userType(UserType.APPLICANT)
                 .build()
         );
