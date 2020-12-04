@@ -8,6 +8,7 @@ import com.on.spring.entity.user.UserRepository;
 import com.on.spring.exception.CompanyNotFoundException;
 import com.on.spring.exception.InvalidTokenException;
 import com.on.spring.exception.UserNotFoundException;
+import com.on.spring.exception.UserNotOwnerException;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.response.CompanyListResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
@@ -33,10 +34,11 @@ public class CompanyServiceImpl implements CompanyService {
     private String filePath;
 
     public void registerCompany(RegisterCompanyRequest request) {
-        List<User> users = new ArrayList<>();
-
-        for (String email : request.getUserEmails()) {
-            users.add(userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new));
+        if (!userRepository.findByEmail(request.getUserEmail())
+                .map(User::isOwner)
+                .orElseThrow(UserNotFoundException::new)
+        ) {
+            throw new UserNotOwnerException();
         }
 
         companyRepository.save(
@@ -44,7 +46,6 @@ public class CompanyServiceImpl implements CompanyService {
                 .ceoName(request.getCeoName())
                 .companyName(request.getCompanyName())
                 .ceoName(request.getCeoName()).like(0L)
-                .users(users)
                 .build()
         );
     }
@@ -63,7 +64,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<User> viewCompanyMember(Long companyId) {
-        return userRepository.findAllByCompanyId(companyId);
+        return companyRepository.findByCompanyId(companyId)
+                .map(Company::getUsers)
+                .orElseThrow(CompanyNotFoundException::new);
     }
 
     @Override
@@ -78,13 +81,9 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void uploadCompanyIntroduceImage(List<MultipartFile> files, Long companyId) {
-        int cur = 1;
-
+    public void uploadCompanyPreviewImage(MultipartFile file, Long companyId) {
         try {
-            for (MultipartFile file : files) {
-                file.transferTo(new File(filePath + companyId + "/" + cur + ".jpg"));
-            }
+            file.transferTo(new File(filePath + "company/" + companyId + "/" + "preview.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,5 +100,10 @@ public class CompanyServiceImpl implements CompanyService {
                             .orElseThrow(CompanyNotFoundException::new);
                 })
                 .orElseThrow(InvalidTokenException::new);
+    }
+
+    @Override
+    public void addWork(Long companyId, String userId) {
+        companyRepository.findByCompanyId()
     }
 }

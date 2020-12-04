@@ -11,5 +11,5 @@ public class RegisterCompanyRequest {
     private String companyNumber;
     private String ceoName;
 
-    private List<String> userEmails;
+    private String userEmail;
 }

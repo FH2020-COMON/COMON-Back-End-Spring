@@ -1,9 +1,10 @@
-package com.on.spring.controller.company;
+package com.on.spring.controller;
 
 import com.on.spring.entity.user.User;
 import com.on.spring.payload.request.RegisterCompanyRequest;
+import com.on.spring.payload.response.BoardResponse;
 import com.on.spring.payload.response.CompanyListResponse;
-import com.on.spring.payload.response.CompanyViewResponse;
+import com.on.spring.payload.response.CompanyApplyViewResponse;
 import com.on.spring.service.company.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +29,13 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}")
-    public CompanyViewResponse companyView(@PathVariable Long companyId) {
-        companyService.
+    public CompanyApplyViewResponse companyApplyView(@PathVariable Long companyId) {
+        companyService.view
     }
 
     @PostMapping("/{companyId}")
-    public void companyIntroduce(List<MultipartFile> files, @PathVariable long companyId) {
-        companyService.uploadCompanyIntroduceImage(files, companyId);
+    public void companyLogo(MultipartFile file, @PathVariable long companyId) {
+        companyService.uploadCompanyPreviewImage(file, companyId);
     }
 
     @PatchMapping("/{companyId}")
@@ -45,5 +46,15 @@ public class CompanyController {
     @GetMapping("/{companyId}/user")
     public List<User> userList(@PathVariable long companyId) {
         return companyService.viewCompanyMember(companyId);
+    }
+
+    @GetMapping("/{companyId}/board")
+    public List<BoardResponse> viewBoard(@PathVariable long companyId) {
+
+    }
+
+    @PostMapping("/{companyId}/{userId}")
+    public void addWork(@PathVariable Long companyId, @PathVariable String userId) {
+
     }
 }

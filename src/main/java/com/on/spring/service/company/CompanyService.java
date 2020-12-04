@@ -12,6 +12,7 @@ public interface CompanyService {
     // public void addUserToCompany(String email, Long companyId);
     public List<User> viewCompanyMember(Long companyId);
     public List<CompanyListResponse> companyList();
-    public void uploadCompanyIntroduceImage(List<MultipartFile> file, Long companyId);
+    public void uploadCompanyPreviewImage(MultipartFile file, Long companyId);
     public void companyLike(Long companyId);
+    public void addWork(Long companyId, String userId);
 }

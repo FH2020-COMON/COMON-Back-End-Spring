@@ -46,4 +46,5 @@ public class AuthDetails implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
 }

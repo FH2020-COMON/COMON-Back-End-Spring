@@ -1,4 +1,4 @@
 package com.on.spring.payload.response;
 
-public class CompanyViewResponse {
+public class ViewCompanyResponse {
 }
