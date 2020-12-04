@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter @AllArgsConstructor @NoArgsConstructor
 public class ViewCompanyResponse {
-    private String
+    private String companyName;
+    
 
 }

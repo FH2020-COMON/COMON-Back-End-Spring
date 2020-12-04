@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 
 @Getter @AllArgsConstructor @NoArgsConstructor
 public class AddWorkRequest {
-    private String requesterId;
+    private String requestId;
+    private String workName;
     private String workContent;
     private String date;
 }

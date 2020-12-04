@@ -1,6 +1,7 @@
 package com.on.spring.entity.work;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,10 +9,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Getter @AllArgsConstructor @NoArgsConstructor
+@Getter @AllArgsConstructor @NoArgsConstructor @Builder
 public class Work {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
+    private String requestId;
 
     @Column(nullable = false)
     private String targetUserEmail;

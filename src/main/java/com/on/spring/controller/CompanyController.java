@@ -1,6 +1,7 @@
 package com.on.spring.controller;
 
 import com.on.spring.entity.user.User;
+import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.response.BoardResponse;
 import com.on.spring.payload.response.CompanyListResponse;
@@ -59,8 +60,8 @@ public class CompanyController {
         return companyService.viewWorks(userId);
     }
 
-    @PostMapping("/{companyId}/work/{userId}")
-    public void addWork(@PathVariable Long companyId, @PathVariable String userId) {
-
+    @PostMapping("/work/{userId}")
+    public void addWork(AddWorkRequest request, @PathVariable String userId) {
+        companyService.addWorks(request, userId);
     }
 }

@@ -11,6 +11,7 @@ import com.on.spring.exception.CompanyNotFoundException;
 import com.on.spring.exception.InvalidTokenException;
 import com.on.spring.exception.UserNotFoundException;
 import com.on.spring.exception.UserNotOwnerException;
+import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.response.CompanyListResponse;
 import com.on.spring.payload.response.WorkResponse;
@@ -22,7 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -119,7 +123,17 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void addWorks(Long companyId, String userId) {
-        return workRepository.findAllByTargetUserEmail()
+    public void addWorks(AddWorkRequest request, String userId) throws ParseException {
+        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        workRepository.save(
+                Work.builder()
+                .requestId(request.getRequestId())
+                .targetUserEmail(userId)
+                .workName(request.getWorkName())
+                .date(transFormat.parse(request.getDate()))
+                .workContent(request.getWorkContent())
+                .build()
+        );
     }
 }
