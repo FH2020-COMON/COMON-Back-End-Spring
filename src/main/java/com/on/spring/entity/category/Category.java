@@ -21,7 +21,7 @@ public class Category {
     @Column(nullable = false)
     private String categoryName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Board> boards;
 
     public Category addBoard(Board board) {
