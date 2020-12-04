@@ -7,6 +7,7 @@ import com.on.spring.entity.category.CategoryRepository;
 import com.on.spring.entity.company.Company;
 import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.entity.companylike.CompanyLikeRepository;
+import com.on.spring.entity.grass.Grass;
 import com.on.spring.entity.user.User;
 import com.on.spring.entity.user.UserRepository;
 import com.on.spring.entity.work.Work;
@@ -16,6 +17,8 @@ import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.request.UploadBoardRequest;
 import com.on.spring.payload.response.BoardResponse;
+import com.on.spring.payload.response.GrassResponse;
+import com.on.spring.payload.response.MemberResponse;
 import com.on.spring.payload.response.WorkResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
@@ -76,9 +79,27 @@ public class CompanyServiceImpl implements CompanyService {
  */
 
     @Override
-    public List<User> viewCompanyMember(Long companyId) {
+    public List<MemberResponse> viewCompanyMember(Long companyId) {
         return companyRepository.findByCompanyId(companyId)
-                .map(Company::getUsers)
+                .map(company -> {
+                    List<MemberResponse> members = new ArrayList<>();
+
+                    for (User user : company.getUsers()) {
+                        List<GrassResponse> grasses = new ArrayList<>();
+
+                        for (Grass grass : user.getGrasses()) {
+                            grasses.add(new GrassResponse(grass.getCreatedDateAt().toString(), grass.getInformation()));
+                        }
+
+                        members.add(MemberResponse.builder()
+                                .email(user.getEmail())
+                                .grassResponse(grasses)
+                                .name(user.getName())
+                                .build());
+                    }
+
+                    return members;
+                })
                 .orElseThrow(CompanyNotFoundException::new);
     }
 
