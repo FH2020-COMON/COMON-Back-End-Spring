@@ -22,4 +22,12 @@ public class Apply {
 
     @Column(nullable = false)
     private LocalDateTime date;
+
+    @Column(nullable = false)
+    private int imageNum;
+
+    public Apply addImageNum(int imageNum) {
+        this.imageNum = imageNum;
+        return this;
+    }
 }

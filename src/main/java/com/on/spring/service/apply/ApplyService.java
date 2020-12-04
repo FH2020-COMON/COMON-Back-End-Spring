@@ -9,4 +9,6 @@ import java.util.List;
 public interface ApplyService {
     public void uploadApply(AddApplyRequest request);
     public ApplyResponse viewApply(Long applyId);
+    public MultipartFile viewApplyPreview(Long applyId);
+    public List<MultipartFile> viewApplyImages(Long applyId);
 }

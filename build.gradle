@@ -30,6 +30,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+    // https://mvnrepository.com/artifact/org.springframework/spring-mock
+    compile group: 'org.springframework', name: 'spring-mock', version: '2.0.8'
     // validation
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.4.0'
