@@ -6,6 +6,7 @@ import com.on.spring.entity.category.Category;
 import com.on.spring.entity.category.CategoryRepository;
 import com.on.spring.entity.company.Company;
 import com.on.spring.entity.company.CompanyRepository;
+import com.on.spring.entity.companylike.CompanyLike;
 import com.on.spring.entity.companylike.CompanyLikeRepository;
 import com.on.spring.entity.grass.Grass;
 import com.on.spring.entity.user.User;
@@ -116,11 +117,21 @@ public class CompanyServiceImpl implements CompanyService {
     public void companyLike(Long companyId) {
         userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .map(user -> {
-                    likeRepository.findAllByCompanyIdAndUserId(companyId, user.getEmail());
-                    return companyRepository.findByCompanyId(companyId)
-                            .map(Company::addLike)
-                            .map(companyRepository::save)
-                            .orElseThrow(CompanyNotFoundException::new);
+                    if (!likeRepository.findByCompanyIdAndUserId(companyId, authenticationFacade.getUserEmail()).isPresent()) {
+                        return companyRepository.findByCompanyId(companyId)
+                                .map(Company::addLike)
+                                .map(companyRepository::save)
+                                .map(company -> {
+                                    return likeRepository.save(
+                                            CompanyLike.builder()
+                                            .companyId(company.getCompanyId())
+                                            .userEmail(authenticationFacade.getUserEmail())
+                                            .build()
+                                    );
+                                })
+                                .orElseThrow(CompanyNotFoundException::new);
+                    }
+                    return user;
                 })
                 .orElseThrow(InvalidTokenException::new);
     }

@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface CompanyLikeRepository extends CrudRepository<CompanyLike, Long> {
-    public Optional<CompanyLike> findAllByCompanyIdAndUserId(Long companyId, String userId);
+    public Optional<CompanyLike> findByCompanyIdAndUserId(Long companyId, String userId);
 }
