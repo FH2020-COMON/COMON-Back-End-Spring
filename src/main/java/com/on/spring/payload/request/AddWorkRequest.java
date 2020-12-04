@@ -9,5 +9,9 @@ public class AddWorkRequest {
     private String requestId;
     private String workName;
     private String workContent;
-    private String date;
+    private int year;
+    private int month;
+    private int day;
+    private int hour;
+    private int minute;
 }

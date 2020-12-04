@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity @Getter @AllArgsConstructor @NoArgsConstructor @Builder
 public class Grass {
@@ -19,7 +19,7 @@ public class Grass {
     private User user;
 
     @Column(nullable = false)
-    private Date createdDateAt;
+    private LocalDateTime createdDateAt;
 
     @Column(nullable = false)
     private String information;

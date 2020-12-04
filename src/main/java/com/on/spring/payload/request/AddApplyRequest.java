@@ -12,6 +12,10 @@ public class AddApplyRequest {
     private String applyName;
     private String companyName;
     private Long companyId;
-    private String date;
+    private int year;
+    private int month;
+    private int day;
+    private int hour;
+    private int minute;
     private List<MultipartFile> files;
 }

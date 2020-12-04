@@ -22,6 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -113,7 +116,8 @@ public class CompanyServiceImpl implements CompanyService {
         List<WorkResponse> workResponses = new ArrayList<>();
 
         for (var work : works) {
-            workResponses.add(new WorkResponse(work.getWorkName(), work.getWorkContent(), work.getDate().toString()));
+            Duration duration = Duration.between(work.getDate(), LocalDateTime.now());
+            workResponses.add(new WorkResponse(work.getWorkName(), work.getWorkContent(), duration.toString()));
         }
 
         return workResponses;
@@ -121,20 +125,14 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void addWorks(AddWorkRequest request, String userId) {
-        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-        try {
-            workRepository.save(
+        workRepository.save(
                     Work.builder()
                             .requestId(request.getRequestId())
                             .targetUserEmail(userId)
                             .workName(request.getWorkName())
-                            .date(transFormat.parse(request.getDate()))
+                            .date(LocalDateTime.of(request.getYear(), request.getMonth(), request.getDay(), request.getHour(), request.getMinute()))
                             .workContent(request.getWorkContent())
                             .build()
-            );
-        } catch (ParseException e) {
-            throw new AddWorkFailedException();
-        }
+        );
     }
 }

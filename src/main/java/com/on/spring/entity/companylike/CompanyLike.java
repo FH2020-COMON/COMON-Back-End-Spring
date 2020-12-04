@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+@Entity("company_like")
 @Getter @AllArgsConstructor @NoArgsConstructor
 public class CompanyLike {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

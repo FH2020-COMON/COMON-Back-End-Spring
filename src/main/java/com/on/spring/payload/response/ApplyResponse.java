@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class ApplyResponse {
     private Long companyId;
     private String companyName;
-    private Long time;
+    private String time;
 }

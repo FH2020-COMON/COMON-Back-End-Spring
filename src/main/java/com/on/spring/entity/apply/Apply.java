@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @AllArgsConstructor @NoArgsConstructor @Builder
@@ -21,5 +21,5 @@ public class Apply {
     private Long companyId;
 
     @Column(nullable = false)
-    private Date date;
+    private LocalDateTime date;
 }
