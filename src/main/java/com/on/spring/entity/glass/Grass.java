@@ -7,22 +7,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity @Getter @AllArgsConstructor @NoArgsConstructor @Builder
-public class Glass {
-    @Id
+public class Grass {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column
-    private Long userId;
 
     @ManyToOne
     @JoinColumn(name = "user")
     private User user;
 
     @Column(nullable = false)
-    private LocalDateTime createdDateAt;
+    private Date createdDateAt;
 
     @Column(nullable = false)
     private String information;

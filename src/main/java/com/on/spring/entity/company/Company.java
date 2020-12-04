@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,11 +23,8 @@ public class Company {
     @Column(nullable = false)
     private String ceoName;
 
-    @Column(nullable = false)
-    private String filePath;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = 'user')
-    private List<User> users;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<User> users = new ArrayList<>();
 
     @Column(nullable = false)
     private Long like;
