@@ -59,8 +59,8 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(
                 Company.builder()
                 .ownerEmail(user.getEmail())
-                .companyName(request.getCompanyName())
-                        .companyAddress(request.getCompanyAddress())
+                .companyName(request.getName())
+                        .companyAddress(request.getAddress())
                 .likes(0L)
                 .build()
         );

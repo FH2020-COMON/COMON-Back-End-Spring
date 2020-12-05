@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 
 @Getter @AllArgsConstructor @NoArgsConstructor
 public class RegisterCompanyRequest {
-    private String companyName;
-    private String companyAddress;
+    private String name;
+    private String address;
 }
