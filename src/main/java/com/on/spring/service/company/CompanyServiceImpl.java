@@ -151,7 +151,7 @@ public class CompanyServiceImpl implements CompanyService {
         workRepository.save(
                     Work.builder()
                             .requestId(request.getRequestId())
-                            .targetUserEmail(userId)
+                            .targetUserEmail(userEmail)
                             .workName(request.getWorkName())
                             .date(LocalDateTime.of(request.getYear(), request.getMonth(), request.getDay(), request.getHour(), request.getMinute()))
                             .workContent(request.getWorkContent())
