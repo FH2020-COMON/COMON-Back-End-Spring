@@ -101,18 +101,18 @@ public class CrowdServiceImpl implements CrowdService {
         List<Crowd> crowds = crowdRepository.findAll();
 
         for (Crowd crowd : crowds) {
-            try {
+             //try {
                 responses.add(CrowdListResponse.builder()
                         .companyName(crowd.getCompanyName())
                         .crowdId(crowd.getId())
                         .crowdName(crowd.getCrowdName())
                         .hashTag(crowd.getHashTag())
-                        .previewImage(new MockMultipartFile("preview.png", new FileInputStream(filePath + crowd.getId() + "/" + "preview.png")))
+                        // .previewImage(new MockMultipartFile("preview.png", new FileInputStream(filePath + crowd.getId() + "/" + "preview.png")))
                         .build()
                 );
-            } catch (IOException e) {
-                throw new FileIsNotFoundException();
-            }
+           // }  catch (IOException e) {
+             //   throw new FileIsNotFoundException();
+            // }
         }
 
         return responses;
