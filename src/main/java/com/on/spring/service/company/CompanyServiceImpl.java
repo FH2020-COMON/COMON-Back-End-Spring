@@ -91,7 +91,7 @@ public class CompanyServiceImpl implements CompanyService {
                     for (User user : company.getUsers()) {
                         members.add(MemberResponse.builder()
                                 .email(user.getEmail())
-                                .grassResponse(userService.viewUserGrass(user.getEmail()))
+                                .grassResponse(userService.viewUserGrass())
                                 .name(user.getName())
                                 .build());
                     }
