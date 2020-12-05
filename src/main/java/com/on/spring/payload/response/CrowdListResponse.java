@@ -14,6 +14,4 @@ public class CrowdListResponse {
     private String hashTag;
     private int nowAmount;
     private int destinationAmount;
-
-    private MultipartFile previewImage;
 }

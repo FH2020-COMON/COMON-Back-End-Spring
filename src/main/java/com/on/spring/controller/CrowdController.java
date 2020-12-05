@@ -26,7 +26,7 @@ public class CrowdController {
     }
 
     @GetMapping("/{crowdId}")
-    public CrowdResponse viewCrowd(@PathVariable Long crowdId) {
+    public CrowdListResponse viewCrowd(@PathVariable Long crowdId) {
         return crowdService.viewCrowd(crowdId);
     }
 

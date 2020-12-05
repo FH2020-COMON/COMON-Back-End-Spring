@@ -48,15 +48,16 @@ public class CrowdServiceImpl implements CrowdService {
     }
 
     @Override
-    public CrowdResponse viewCrowd(Long crowdId) {
+    public CrowdListResponse viewCrowd(Long crowdId) {
         return crowdRepository.findById(crowdId)
                 .map(crowd -> {
-                            return CrowdResponse.builder()
+                            return CrowdListResponse.builder()
                                     .hashTag(crowd.getHashTag())
-                                    .crowdTitle(crowd.getCrowdName())
+                                    .crowdName(crowd.getCrowdName())
                                     .companyName(crowd.getCompanyName())
                                     .destinationAmount(crowd.getDestinationAmount())
                                     .nowAmount(crowd.getNowAmount())
+                                    .crowdId(crowd.getId())
                                     .build();
                         }
                     )

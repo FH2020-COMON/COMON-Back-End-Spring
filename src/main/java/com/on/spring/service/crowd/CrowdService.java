@@ -9,7 +9,7 @@ import java.util.List;
 public interface CrowdService {
     public void uploadCrowd(UploadCrowdRequest request);
     public List<CrowdListResponse> viewCrowdList();
-    public CrowdResponse viewCrowd(Long crowdId);
+    public CrowdListResponse viewCrowd(Long crowdId);
     public List<CrowdListResponse> viewCompanyCrowdList(Long companyId);
     public void addCrowd(Long crowdId, Long crowdAmount);
 }
