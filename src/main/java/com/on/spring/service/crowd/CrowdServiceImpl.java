@@ -59,6 +59,7 @@ public class CrowdServiceImpl implements CrowdService {
             Path path = Paths.get(filePath + "crowd/" + crowd.getId().toString() + "/" + file.getOriginalFilename());
             Files.write(path, bytes);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new FileUploadFailedException();
         }
     }
