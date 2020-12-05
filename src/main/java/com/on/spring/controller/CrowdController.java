@@ -22,7 +22,7 @@ public class CrowdController {
     }
 
     @PostMapping
-    public void uploadCrowd(@RequestBody UploadCrowdRequest request, List<MultipartFile> files) {
+    public void uploadCrowd(@RequestBody UploadCrowdRequest request, @ModelAttribute List<MultipartFile> files) {
         crowdService.uploadCrowd(request, files);
     }
 
