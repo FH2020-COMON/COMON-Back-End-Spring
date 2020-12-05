@@ -41,7 +41,7 @@ public class CrowdServiceImpl implements CrowdService {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        crowdRepository.save(
+        Crowd crowd = crowdRepository.save(
                 Crowd.builder().companyId(user.getCompany().getCompanyId())
                 .companyName(request.getCompanyName())
                 .destinationAmount(request.getDestinationAmount())
