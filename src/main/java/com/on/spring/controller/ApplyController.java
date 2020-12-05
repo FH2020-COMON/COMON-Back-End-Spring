@@ -3,6 +3,7 @@ package com.on.spring.controller;
 import com.on.spring.payload.request.AddApplyRequest;
 import com.on.spring.payload.response.ApplyListResponse;
 import com.on.spring.payload.response.ApplyResponse;
+import com.on.spring.payload.response.TopApplyResponse;
 import com.on.spring.service.apply.ApplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,11 @@ public class ApplyController {
     @GetMapping("/image/preview/{applyId}")
     public MultipartFile viewApplyPreview(@PathVariable Long applyId) {
         return applyService.viewApplyPreview(applyId);
+    }
+
+    @GetMapping("/top")
+    public List<TopApplyResponse> topApplyResponses() {
+        return applyService.topApplyResponses();
     }
 
     @PostMapping
