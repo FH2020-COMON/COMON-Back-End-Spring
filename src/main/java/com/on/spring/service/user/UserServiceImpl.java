@@ -7,13 +7,11 @@ import com.on.spring.entity.user.UserType;
 import com.on.spring.exception.UserNotFoundException;
 import com.on.spring.payload.request.RegisterRequest;
 import com.on.spring.payload.response.GrassResponse;
+import com.on.spring.payload.response.MyPageResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,13 +21,39 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public List<GrassResponse> viewUserGrass(String userId) {
-        return userRepository.findByEmail(userId)
+    public GrassResponse[] viewUserGrass(String userEmail) {
+        return userRepository.findByEmail(userEmail)
                 .map(user -> {
-                    List<GrassResponse> response = new ArrayList<>();
+                    GrassResponse [] response = new GrassResponse[12];
 
                     for (Grass grass : user.getGrasses()) {
-                        response.add(new GrassResponse(grass.getCreatedDateAt().toString(), grass.getInformation()));
+                        switch (grass.getCreatedDateAt().getMonth()) {
+                            case JANUARY:
+                                response[0].sizeUp();
+                            case FEBRUARY:
+                                response[1].sizeUp();
+                            case MARCH:
+                                response[2].sizeUp();
+                            case APRIL:
+                                response[3].sizeUp();
+                            case MAY:
+                                response[4].sizeUp();
+                            case JUNE:
+                                response[5].sizeUp();
+                            case JULY:
+                                response[6].sizeUp();
+                            case AUGUST:
+                                response[7].sizeUp();
+                            case SEPTEMBER:
+                                response[8].sizeUp();
+                            case OCTOBER:
+                                response[9].sizeUp();
+                            case NOVEMBER:
+                                response[10].sizeUp();
+                            case DECEMBER:
+                                response[11].sizeUp();
+                        }
+                        return response;
                     }
 
                     return response;
@@ -61,5 +85,17 @@ public class UserServiceImpl implements UserService {
                 .userType(UserType.APPLICANT)
                 .build()
         );
+    }
+
+    @Override
+    public MyPageResponse viewMyPage() {
+        return userRepository.findByEmail(authenticationFacade.getUserEmail())
+                .map(user ->
+                    MyPageResponse.builder()
+                            .companyName(user.getCompany().getCompanyName())
+                            .name(user.getName())
+                            .grass(viewUserGrass(authenticationFacade.getUserEmail()))
+                            .build())
+                .orElseThrow(UserNotFoundException::new);
     }
 }

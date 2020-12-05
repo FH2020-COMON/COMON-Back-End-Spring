@@ -4,6 +4,13 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class GrassResponse {
-    private final String createdDateAt;
-    private final String information;
+    private int size;
+
+    GrassResponse() {
+        this.size = 0;
+    }
+
+    public void sizeUp() {
+        this.size++;
+    }
 }

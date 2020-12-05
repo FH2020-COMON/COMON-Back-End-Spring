@@ -20,7 +20,4 @@ public class Grass {
 
     @Column(nullable = false)
     private LocalDateTime createdDateAt;
-
-    @Column(nullable = false)
-    private String information;
 }
