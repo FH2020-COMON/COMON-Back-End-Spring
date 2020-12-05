@@ -40,7 +40,7 @@ public class ApplyServiceImpl implements ApplyService {
     private String filePath;
 
     @Override
-    public void uploadApply(AddApplyRequest request, List<MultipartFile> files) {
+    public void uploadApply(AddApplyRequest request/*, List<MultipartFile> files*/) {
         int cur = 1;
 
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
