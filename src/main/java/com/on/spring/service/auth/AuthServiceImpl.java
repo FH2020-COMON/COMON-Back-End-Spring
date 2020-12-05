@@ -19,9 +19,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String login(LoginRequest request) {
         return userRepository.findByEmail(request.getEmail())
+                .map(user -> {
+                    System.out.println(user.getEmail());
+                    return user;
+                })
                 .filter(user -> passwordEncoder.matches(request.getPassword(), user.getPassword()))
-                .map(User::getEmail)
-                .map(jwtTokenProvider::generateAccessToken)
+                    .map(user -> jwtTokenProvider.generateAccessToken(user.getEmail()))
                 .orElseThrow(UserNotFoundException::new);
     }
 }
