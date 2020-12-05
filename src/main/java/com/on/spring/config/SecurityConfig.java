@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .sessionManagement().disable()
                 .formLogin().disable()
                 .authorizeRequests()
-                    .antMatchers("/**").permitAll();
+                    .antMatchers("*").permitAll();
     }
 
     @Override
