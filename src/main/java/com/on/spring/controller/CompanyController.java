@@ -19,7 +19,7 @@ import java.util.List;
 public class CompanyController {
     private final CompanyService companyService;
 
-    @PostMapping("/")
+    @PostMapping
     public void registerCompany(@RequestBody RegisterCompanyRequest request) {
         companyService.registerCompany(request);
     }
