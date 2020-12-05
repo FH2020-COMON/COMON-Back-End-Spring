@@ -10,5 +10,5 @@ import java.util.List;
 public class MemberResponse {
     private String name;
     private String email;
-    private List<GrassResponse> grassResponse;
+    private GrassResponse[] grassResponse;
 }

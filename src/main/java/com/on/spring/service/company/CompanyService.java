@@ -18,7 +18,7 @@ public interface CompanyService {
     public void uploadCompanyPreviewImage(MultipartFile file, Long companyId);
     public void companyLike(Long companyId);
     public List<WorkResponse> viewWorks(String userEmail);
-    public void addWorks(AddWorkRequest request, String userId);
+    public void addWorks(AddWorkRequest request, String userEmail);
     public List<BoardResponse> viewBoardList(long companyId);
     public void uploadBoard(UploadBoardRequest request, Long companyId);
     public MultipartFile viewBoard(Long companyId, Long boardId);

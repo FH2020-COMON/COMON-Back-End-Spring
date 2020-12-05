@@ -9,6 +9,7 @@ import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.entity.companylike.CompanyLike;
 import com.on.spring.entity.companylike.CompanyLikeRepository;
 import com.on.spring.entity.grass.Grass;
+import com.on.spring.entity.grass.GrassRepository;
 import com.on.spring.entity.user.User;
 import com.on.spring.entity.user.UserRepository;
 import com.on.spring.entity.work.Work;
@@ -18,10 +19,10 @@ import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.request.UploadBoardRequest;
 import com.on.spring.payload.response.BoardResponse;
-import com.on.spring.payload.response.GrassResponse;
 import com.on.spring.payload.response.MemberResponse;
 import com.on.spring.payload.response.WorkResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
+import com.on.spring.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mock.web.MockMultipartFile;
@@ -45,7 +46,9 @@ public class CompanyServiceImpl implements CompanyService {
     private final AuthenticationFacade authenticationFacade;
     private final WorkRepository workRepository;
     private final BoardRepository boardRepository;
+    private final GrassRepository grassRepository;
     private final CategoryRepository categoryRepository;
+    private final UserService userService;
 
     @Value("${spring.file.path}")
     private String filePath;
@@ -86,15 +89,9 @@ public class CompanyServiceImpl implements CompanyService {
                     List<MemberResponse> members = new ArrayList<>();
 
                     for (User user : company.getUsers()) {
-                        List<GrassResponse> grasses = new ArrayList<>();
-
-                        for (Grass grass : user.getGrasses()) {
-                            grasses.add(new GrassResponse(grass.getCreatedDateAt().toString(), grass.getInformation()));
-                        }
-
                         members.add(MemberResponse.builder()
                                 .email(user.getEmail())
-                                .grassResponse(grasses)
+                                .grassResponse(userService.viewUserGrass(user.getEmail()))
                                 .name(user.getName())
                                 .build());
                     }
@@ -150,7 +147,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void addWorks(AddWorkRequest request, String userId) {
+    public void addWorks(AddWorkRequest request, String userEmail) {
         workRepository.save(
                     Work.builder()
                             .requestId(request.getRequestId())
@@ -159,6 +156,13 @@ public class CompanyServiceImpl implements CompanyService {
                             .date(LocalDateTime.of(request.getYear(), request.getMonth(), request.getDay(), request.getHour(), request.getMinute()))
                             .workContent(request.getWorkContent())
                             .build()
+        );
+
+        grassRepository.save(
+                Grass.builder()
+                .createdDateAt(LocalDateTime.now())
+                .user(userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new))
+                .build()
         );
     }
 
