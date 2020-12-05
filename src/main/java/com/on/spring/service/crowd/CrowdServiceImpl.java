@@ -8,7 +8,6 @@ import com.on.spring.exception.CrowdNotFoundException;
 import com.on.spring.exception.FileIsNotFoundException;
 import com.on.spring.exception.FileUploadFailedException;
 import com.on.spring.exception.UserNotFoundException;
-import com.on.spring.payload.request.UploadCrowdRequest;
 import com.on.spring.payload.response.CrowdListResponse;
 import com.on.spring.payload.response.CrowdResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
@@ -35,26 +34,26 @@ public class CrowdServiceImpl implements CrowdService {
     private String filePath;
 
     @Override
-    public void uploadCrowd(UploadCrowdRequest request) {
+    public void uploadCrowd(List<MultipartFile> files, String crowdTitle, int destinationAmount) {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        System.out.println(request.getCrowdTitle() + request.getDestinationAmount());
+        System.out.println(crowdTitle + destinationAmount);
 
         Crowd crowd = crowdRepository.save(
                 Crowd.builder().companyId(user.getCompany().getCompanyId())
-                        .crowdName(request.getCrowdTitle())
+                        .crowdName(crowdTitle)
                 .companyName(user.getCompany().getCompanyName())
-                .destinationAmount(request.getDestinationAmount())
+                .destinationAmount(destinationAmount)
                 .nowAmount(0)
                 .build()
         );
 
         try {
             int cur = 1;
-            request.getFiles().get(0).transferTo(new File(filePath + "crowd/" + crowd.getId() + "/preview.png"));
-            request.getFiles().remove(0);
-            for (MultipartFile file : request.getFiles()) {
+            files.get(0).transferTo(new File(filePath + "crowd/" + crowd.getId() + "/preview.png"));
+            files.remove(0);
+            for (MultipartFile file : files) {
                 try {
                     file.transferTo(new File(filePath + "crowd/" + crowd.getId() + "/" + cur + ".png"));
                 } catch (IOException e) {
