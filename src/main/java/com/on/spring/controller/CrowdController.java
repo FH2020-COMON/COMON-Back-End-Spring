@@ -21,7 +21,7 @@ public class CrowdController {
     }
 
     @PostMapping
-    public void uploadCrowd(UploadCrowdRequest request) {
+    public void uploadCrowd(@RequestBody UploadCrowdRequest request) {
         crowdService.uploadCrowd(request);
     }
 
