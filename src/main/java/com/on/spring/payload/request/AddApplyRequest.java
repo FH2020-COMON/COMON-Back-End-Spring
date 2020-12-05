@@ -16,4 +16,8 @@ public class AddApplyRequest {
     private int hour;
     private int minute;
     private String hashTag;
+
+    public String getApplyName() {
+        return this.applyName;
+    }
 }

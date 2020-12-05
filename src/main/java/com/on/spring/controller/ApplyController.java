@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -37,7 +38,7 @@ public class ApplyController {
     }
 
     @PostMapping
-    public void addApply(@RequestBody AddApplyRequest request) {
+    public void addApply(@RequestBody @Valid AddApplyRequest request) {
         applyService.uploadApply(request);
     }
 }
