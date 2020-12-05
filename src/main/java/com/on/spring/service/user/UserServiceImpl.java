@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
                     return MyPageResponse.builder()
                             .companyName(companyName)
                             .name(user.getName())
-                            .grass(Arrays.asList(viewUserGrass()))
+                            // .grass(Arrays.asList(viewUserGrass()))
                             .build();
                 })
                 .orElseThrow(UserNotFoundException::new);
