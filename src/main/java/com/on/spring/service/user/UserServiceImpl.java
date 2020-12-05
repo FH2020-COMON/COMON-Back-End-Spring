@@ -107,6 +107,7 @@ public class UserServiceImpl implements UserService {
                     return MyPageResponse.builder()
                             .companyName(companyName)
                             .name(user.getName())
+                            .userType(user.getUserType().toString())
                             .grass(Arrays.asList(viewUserGrass()))
                             .build();
                 })

@@ -11,5 +11,6 @@ import java.util.List;
 public class MyPageResponse {
     private String name;
     private String companyName;
+    private String userType;
     private List<GrassResponse> grass;
 }

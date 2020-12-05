@@ -86,12 +86,7 @@ public class ApplyServiceImpl implements ApplyService {
                 break;
 
             List<Apply> applies = applyRepository.findAllByCompanyId(company.getCompanyId());
-            if (applies.get(0) == null)
-                continue;
-
-            else {
-                Apply apply = applies.get(0);
-
+            for (Apply apply : applies) {
                 responses.add(TopApplyResponse.builder()
                         .likes(company.getLikes())
                         .hashTag(apply.getHashTag())
@@ -100,8 +95,8 @@ public class ApplyServiceImpl implements ApplyService {
                         .applyName(apply.getApplyName())
                         .applyId(apply.getApplyId())
                         .build());
+                break;
             }
-
             cur++;
         }
 
