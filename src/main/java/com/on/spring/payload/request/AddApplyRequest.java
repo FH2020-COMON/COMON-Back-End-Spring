@@ -17,6 +17,5 @@ public class AddApplyRequest {
     private int day;
     private int hour;
     private int minute;
-    private List<MultipartFile> files;
     private String hashTag;
 }

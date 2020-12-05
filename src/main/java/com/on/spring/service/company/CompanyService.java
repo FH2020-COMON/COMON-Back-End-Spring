@@ -1,6 +1,5 @@
 package com.on.spring.service.company;
 
-import com.on.spring.entity.user.User;
 import com.on.spring.payload.request.AddWorkRequest;
 import com.on.spring.payload.request.RegisterCompanyRequest;
 import com.on.spring.payload.request.UploadBoardRequest;
@@ -20,6 +19,6 @@ public interface CompanyService {
     public List<WorkResponse> viewWorks(String userEmail);
     public void addWorks(AddWorkRequest request, String userEmail);
     public List<BoardResponse> viewBoardList(long companyId);
-    public void uploadBoard(UploadBoardRequest request, Long companyId);
-    public MultipartFile viewBoard(Long companyId, Long boardId);
+    public void uploadBoard(UploadBoardRequest request, Long companyId, MultipartFile file);
+    public String viewBoard(Long companyId, Long boardId);
 }

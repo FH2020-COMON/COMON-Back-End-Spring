@@ -1,7 +1,5 @@
 package com.on.spring.service.crowd;
 
-import com.on.spring.entity.company.Company;
-import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.entity.crowd.Crowd;
 import com.on.spring.entity.crowd.CrowdRepository;
 import com.on.spring.entity.user.User;
@@ -37,7 +35,7 @@ public class CrowdServiceImpl implements CrowdService {
     private String filePath;
 
     @Override
-    public void uploadCrowd(UploadCrowdRequest request) {
+    public void uploadCrowd(UploadCrowdRequest request, List<MultipartFile> files) {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
@@ -51,7 +49,6 @@ public class CrowdServiceImpl implements CrowdService {
 
         try {
             int cur = 1;
-            List<MultipartFile> files = request.getFiles();
             files.get(0).transferTo(new File(filePath + "crowd/" + crowd.getId() + "/preview.png"));
             files.remove(0);
             for (MultipartFile file : files) {

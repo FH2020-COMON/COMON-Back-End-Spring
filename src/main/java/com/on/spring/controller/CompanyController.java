@@ -45,8 +45,8 @@ public class CompanyController {
     }
 
     @PostMapping("/{companyId}/board")
-    public void uploadBoard(@RequestBody UploadBoardRequest request, @PathVariable long companyId) {
-        companyService.uploadBoard(request, companyId);
+    public void uploadBoard(@RequestBody UploadBoardRequest request, @PathVariable long companyId, MultipartFile file) {
+        companyService.uploadBoard(request, companyId, file);
     }
 
     @GetMapping("/{companyId}/board/{boardId}")

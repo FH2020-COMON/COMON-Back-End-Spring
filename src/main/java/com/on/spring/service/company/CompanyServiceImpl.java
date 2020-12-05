@@ -178,7 +178,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void uploadBoard(UploadBoardRequest request, Long companyId) {
+    public void uploadBoard(UploadBoardRequest request, Long companyId, MultipartFile file) {
         Board board = null;
         Category targetCategory = null;
 
@@ -213,22 +213,14 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         try {
-            request.getFile().transferTo(new File(filePath + "board" + companyId + "/" + board.getId() + "/" + "read.md"));
+            file.transferTo(new File(filePath + "board" + companyId + "/" + board.getId() + "/" + "read.md"));
         } catch (IOException e) {
             throw new FileUploadFailedException();
         }
     }
 
     @Override
-    public MultipartFile viewBoard(Long companyId, Long boardId) {
-        MultipartFile file;
-
-        try {
-            file = new MockMultipartFile("read.md", new FileInputStream(filePath + companyId + "/" + boardId + "/" + "read.md"));
-        } catch (IOException e) {
-            throw new FileIsNotFoundException();
-        }
-
-        return file;
+    public String viewBoard(Long companyId, Long boardId) {
+        return filePath + companyId + "/" + boardId + "/" + "read.md";
     }
 }

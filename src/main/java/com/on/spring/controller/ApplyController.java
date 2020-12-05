@@ -37,7 +37,7 @@ public class ApplyController {
     }
 
     @PostMapping
-    public void addApply(@RequestBody AddApplyRequest request) {
-        applyService.uploadApply(request);
+    public void addApply(@RequestBody AddApplyRequest request, List<MultipartFile> files) {
+        applyService.uploadApply(request, files);
     }
 }

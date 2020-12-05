@@ -34,7 +34,7 @@ public class ApplyServiceImpl implements ApplyService {
     private String filePath;
 
     @Override
-    public void uploadApply(AddApplyRequest request) {
+    public void uploadApply(AddApplyRequest request, List<MultipartFile> files) {
         int cur = 1;
 
         Apply apply = applyRepository.save(
@@ -50,9 +50,9 @@ public class ApplyServiceImpl implements ApplyService {
         Long applyId = apply.getApplyId();
 
         try {
-            request.getFiles().get(0).transferTo(new File(filePath + "apply/" + applyId + "/" + "preview.png"));
-            request.getFiles().remove(0);
-            for (MultipartFile file : request.getFiles()) {
+            files.get(0).transferTo(new File(filePath + "apply/" + applyId + "/" + "preview.png"));
+            files.remove(0);
+            for (MultipartFile file : files) {
                 file.transferTo(new File(filePath + "apply/"+ applyId + "/" + cur + ".png"));
                 cur++;
             }
@@ -94,20 +94,15 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     @Override
-    public List<MultipartFile> viewApplyImages(Long applyId) {
+    public List<String> viewApplyImages(Long applyId) {
         return applyRepository.findByApplyId(applyId)
                 .map(apply -> {
-                    List<MultipartFile> files = new ArrayList<>();
+                    List<String> filePath = new ArrayList<>();
                     int cur = apply.getImageNum();
-                    try {
-                        for (int i = 1; i <= apply.getApplyId(); i++) {
-                            MultipartFile file = new MockMultipartFile(cur + ".png", new FileInputStream(filePath + applyId + "/" + cur + ".png"));
-                            files.add(file);
-                        }
-                        return files;
-                    } catch (IOException e) {
-                        throw new FileIsNotFoundException();
+                    for (int i = 1; i <= apply.getApplyId(); i++) {
+                            filePath.add(filePath + applyId.toString() + "/" + cur + ".png");
                     }
+                    return filePath;
                 })
                 .orElseThrow(ApplyNotFoundException::new);
     }
@@ -120,7 +115,6 @@ public class ApplyServiceImpl implements ApplyService {
 
             Company company = companyRepository.findByCompanyId(apply.getCompanyId())
                     .orElseThrow(CompanyNotFoundException::new);
-            try {
                 responses.add(
                         ApplyListResponse.builder()
                                 .applyName(apply.getApplyName())
@@ -128,12 +122,9 @@ public class ApplyServiceImpl implements ApplyService {
                                 .companyId(apply.getCompanyId())
                                 .dDay(diffTime.toDays())
                                 .likes(company.getLikes())
-                                .preview(new MockMultipartFile("preview.png", new FileInputStream(filePath + apply.getApplyId() + "/" + "preview.png")))
+                                .previewPath(filePath + apply.getApplyId() + "/" + "preview.png")
                                 .build()
                 );
-            } catch (IOException e) {
-                throw new FileIsNotFoundException();
-            }
         });
 
         return responses;

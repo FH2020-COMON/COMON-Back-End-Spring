@@ -16,5 +16,5 @@ public class ApplyListResponse {
     private Long dDay;
     private Long likes;
 
-    private MultipartFile preview;
+    private String previewPath;
 }
