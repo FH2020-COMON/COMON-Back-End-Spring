@@ -34,6 +34,7 @@ public class CrowdController {
             ObjectMapper objectMapper = new ObjectMapper();
             request = objectMapper.readValue(user, UploadCrowdRequest.class);
         } catch (IOException err) {
+            err.printStackTrace();
             throw new FileUploadFailedException();
         }
 

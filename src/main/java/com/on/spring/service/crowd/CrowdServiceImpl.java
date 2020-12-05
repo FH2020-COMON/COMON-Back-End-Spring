@@ -55,6 +55,7 @@ public class CrowdServiceImpl implements CrowdService {
                 try {
                     file.transferTo(new File(filePath + "crowd/" + crowd.getId() + "/" + cur + ".png"));
                 } catch (IOException e) {
+                    System.out.println("File Upload Failed!!");
                     throw new FileUploadFailedException();
                 }
                 cur++;
