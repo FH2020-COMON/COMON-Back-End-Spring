@@ -30,7 +30,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -54,15 +53,10 @@ public class CompanyServiceImpl implements CompanyService {
     private String filePath;
 
     public void registerCompany(RegisterCompanyRequest request) {
-        if (!userRepository.findByEmail(authenticationFacade.getUserEmail())
-                .map(User::isOwner)
-                .orElseThrow(UserNotFoundException::new)
-        ) {
-            throw new UserNotOwnerException();
-        }
-
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
+
+        userRepository.save(user.switchOwner());
 
         companyRepository.save(
                 Company.builder()
