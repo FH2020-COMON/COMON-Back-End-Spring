@@ -6,10 +6,8 @@ import com.on.spring.entity.company.Company;
 import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.entity.user.User;
 import com.on.spring.entity.user.UserRepository;
-import com.on.spring.exception.ApplyNotFoundException;
-import com.on.spring.exception.CompanyNotFoundException;
-import com.on.spring.exception.FileIsNotFoundException;
-import com.on.spring.exception.UserNotFoundException;
+import com.on.spring.entity.user.UserType;
+import com.on.spring.exception.*;
 import com.on.spring.payload.request.AddApplyRequest;
 import com.on.spring.payload.response.ApplyResponse;
 import com.on.spring.payload.response.ApplyListResponse;
@@ -41,10 +39,11 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Override
     public void uploadApply(AddApplyRequest request) {
-        int cur = 1;
-
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
+
+        if (!user.getUserType().equals(UserType.OWNER))
+            throw new InvalidTokenException();
 
         Apply apply = applyRepository.save(
                 Apply.builder()
@@ -84,7 +83,13 @@ public class ApplyServiceImpl implements ApplyService {
             if (cur > 3)
                 break;
 
-            Apply apply = applyRepository.findAllByCompanyId(company.getCompanyId()).get(0);
+            List<Apply> applies = applyRepository.findAllByCompanyId(company.getCompanyId());
+
+            if (applies.get(0) == null) {
+                continue;
+            }
+
+            Apply apply = applies.get(0);
 
             responses.add(TopApplyResponse.builder()
                     .applyId(apply.getApplyId())
