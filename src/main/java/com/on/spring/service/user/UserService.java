@@ -7,7 +7,7 @@ import com.on.spring.payload.response.MyPageResponse;
 import java.util.List;
 
 public interface UserService {
-    public GrassResponse[] viewUserGrass(String userEmail);
+    public GrassResponse[] viewUserGrass();
     public void switchOwner();
     public void switchExecutive();
     public void register(RegisterRequest request);

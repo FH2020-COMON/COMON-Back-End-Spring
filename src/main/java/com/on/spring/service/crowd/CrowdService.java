@@ -10,4 +10,5 @@ public interface CrowdService {
     public void uploadCrowd(UploadCrowdRequest request);
     public List<CrowdListResponse> viewCrowdList();
     public CrowdResponse viewCrowd(Long crowdId);
+    public List<CrowdListResponse> viewCompanyCrowdList(Long companyId);
 }

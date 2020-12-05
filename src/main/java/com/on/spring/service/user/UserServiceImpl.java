@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public GrassResponse[] viewUserGrass(String userEmail) {
-        return userRepository.findByEmail(userEmail)
+    public GrassResponse[] viewUserGrass() {
+        return userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .map(user -> {
                     GrassResponse [] response = new GrassResponse[12];
 
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
                     MyPageResponse.builder()
                             .companyName(user.getCompany().getCompanyName())
                             .name(user.getName())
-                            .grass(viewUserGrass(authenticationFacade.getUserEmail()))
+                            .grass(viewUserGrass())
                             .build())
                 .orElseThrow(UserNotFoundException::new);
     }

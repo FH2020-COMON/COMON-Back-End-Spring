@@ -12,4 +12,5 @@ public class ApplyListResponse {
     private Long companyId;
     private Long applyId;
     private Long dDay;
+    private Long likes;
 }

@@ -16,8 +16,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/grass")
-    public GrassResponse[] viewUserGrass(String userId) {
-        return userService.viewUserGrass(userId);
+    public GrassResponse[] viewUserGrass() {
+        return userService.viewUserGrass();
     }
 
     @PostMapping

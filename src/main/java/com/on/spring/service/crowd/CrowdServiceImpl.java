@@ -86,6 +86,11 @@ public class CrowdServiceImpl implements CrowdService {
     }
 
     @Override
+    public List<CrowdListResponse> viewCompanyCrowdList(Long companyId) {
+        return null;
+    }
+
+    @Override
     public List<CrowdListResponse> viewCrowdList() {
         List<CrowdListResponse> responses = new ArrayList<>();
         List<Crowd> crowds = crowdRepository.findAll();

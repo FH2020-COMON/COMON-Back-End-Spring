@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface CrowdRepository extends CrudRepository<Crowd, Long> {
     public Optional<Crowd> findById(Long id);
     public List<Crowd> findAll();
+    public List<Crowd> findAllByCompanyId(Long companyId);
 }

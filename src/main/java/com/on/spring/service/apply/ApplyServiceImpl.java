@@ -2,7 +2,10 @@ package com.on.spring.service.apply;
 
 import com.on.spring.entity.apply.Apply;
 import com.on.spring.entity.apply.ApplyRepository;
+import com.on.spring.entity.company.Company;
+import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.exception.ApplyNotFoundException;
+import com.on.spring.exception.CompanyNotFoundException;
 import com.on.spring.exception.FileIsNotFoundException;
 import com.on.spring.payload.request.AddApplyRequest;
 import com.on.spring.payload.response.ApplyResponse;
@@ -25,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApplyServiceImpl implements ApplyService {
     private final ApplyRepository applyRepository;
+    private final CompanyRepository companyRepository;
 
     @Value("${spring.file.path}")
     private String filePath;
@@ -120,6 +124,7 @@ public class ApplyServiceImpl implements ApplyService {
                     .companyName(apply.getCompanyName())
                     .companyId(apply.getCompanyId())
                     .dDay(diffTime.toDays())
+                        .likes(companyRepository.findByCompanyId(apply.getCompanyId()).map(Company::getLikes).orElseThrow(CompanyNotFoundException::new))
                     .build()
             );
         });

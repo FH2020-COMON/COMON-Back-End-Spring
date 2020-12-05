@@ -14,6 +14,9 @@ public class Crowd {
     private Long id;
 
     @Column(nullable = false)
+    private Long companyId;
+
+    @Column(nullable = false)
     private String companyName;
 
     @Column(nullable = false)
