@@ -4,6 +4,7 @@ import com.on.spring.entity.grass.Grass;
 import com.on.spring.entity.user.User;
 import com.on.spring.entity.user.UserRepository;
 import com.on.spring.entity.user.UserType;
+import com.on.spring.exception.UserAlreadyRegisteredException;
 import com.on.spring.exception.UserNotFoundException;
 import com.on.spring.payload.request.RegisterRequest;
 import com.on.spring.payload.response.GrassResponse;
@@ -77,6 +78,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(RegisterRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent())
+            throw new UserAlreadyRegisteredException();
+
         userRepository.save(
                 User.builder()
                 .email(request.getEmail())
