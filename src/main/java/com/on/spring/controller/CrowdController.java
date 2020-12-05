@@ -31,7 +31,7 @@ public class CrowdController {
     }
 
     @GetMapping("/{crowdId}/addition")
-    public void addCrowd(@PathVariable Long crowdId, @RequestPart("amount") Long amount) {
+    public void addCrowd(@PathVariable Long crowdId, @RequestParam("amount") Long amount) {
         crowdService.addCrowd(crowdId, amount);
     }
 }
