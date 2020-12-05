@@ -30,7 +30,7 @@ public class CrowdController {
         return crowdService.viewCrowd(crowdId);
     }
 
-    @GetMapping("/{crowdId}")
+    @GetMapping("/{crowdId}/addition")
     public void addCrowd(@PathVariable Long crowdId, Long amount) {
         crowdService.addCrowd(crowdId, amount);
     }
