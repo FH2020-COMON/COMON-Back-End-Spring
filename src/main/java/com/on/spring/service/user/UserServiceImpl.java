@@ -96,9 +96,12 @@ public class UserServiceImpl implements UserService {
         System.out.println(authenticationFacade.getUserEmail());
         return userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .map(user -> {
-                    String companyName = user.getCompany().getCompanyName();
-                    if (companyName == null)
+                    String companyName;
+                    if (user.getCompany() == null)
                         companyName = "등록된 회사 없음";
+                    else {
+                        companyName = user.getCompany().getCompanyName();
+                    }
                     return MyPageResponse.builder()
                             .companyName(companyName)
                             .name(user.getName())
