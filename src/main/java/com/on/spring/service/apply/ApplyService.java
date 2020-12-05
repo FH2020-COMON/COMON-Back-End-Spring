@@ -14,5 +14,5 @@ public interface ApplyService {
     public MultipartFile viewApplyPreview(Long applyId);
     public List<String> viewApplyImages(Long applyId);
     public List<ApplyListResponse> companyApplyView();
-    public List<TopApplyResponse> topApplyResponses()
+    public List<TopApplyResponse> topApplyResponses();
 }

@@ -133,7 +133,6 @@ public class ApplyServiceImpl implements ApplyService {
         List<ApplyListResponse> responses = new ArrayList<>();
         applyRepository.findAll().forEach(apply ->  {
             Duration diffTime = Duration.between(apply.getDate(), LocalDateTime.now());
-
             Company company = companyRepository.findByCompanyId(apply.getCompanyId())
                     .orElseThrow(CompanyNotFoundException::new);
                 responses.add(
@@ -142,6 +141,8 @@ public class ApplyServiceImpl implements ApplyService {
                                 .companyName(apply.getCompanyName())
                                 .companyId(apply.getCompanyId())
                                 .dDay(diffTime.toDays())
+                                .hashTag(apply.getHashTag())
+                                .applyId(apply.getApplyId())
                                 .likes(company.getLikes())
                                 .build()
                 );
