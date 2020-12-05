@@ -21,8 +21,8 @@ public class CompanyController {
 
     @PostMapping
     public void registerCompany(@RequestBody RegisterCompanyRequest request) {
-        System.out.println(request.getCompanyAddress());
-        System.out.println(request.getCompanyName());
+        System.out.println(request.getAddress());
+        System.out.println(request.getName());
         companyService.registerCompany(request);
     }
 
