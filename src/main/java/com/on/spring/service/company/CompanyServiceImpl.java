@@ -54,18 +54,21 @@ public class CompanyServiceImpl implements CompanyService {
     private String filePath;
 
     public void registerCompany(RegisterCompanyRequest request) {
-        if (!userRepository.findByEmail(request.getUserEmail())
+        if (!userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .map(User::isOwner)
                 .orElseThrow(UserNotFoundException::new)
         ) {
             throw new UserNotOwnerException();
         }
 
+        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
+                .orElseThrow(UserNotFoundException::new);
+
         companyRepository.save(
                 Company.builder()
-                .ceoName(request.getCeoName())
+                .ceoName(user.getName())
                 .companyName(request.getCompanyName())
-                .ceoName(request.getCeoName()).likes(0L)
+                .likes(0L)
                 .build()
         );
     }
