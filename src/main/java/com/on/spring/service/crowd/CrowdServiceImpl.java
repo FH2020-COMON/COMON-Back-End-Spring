@@ -35,7 +35,7 @@ public class CrowdServiceImpl implements CrowdService {
     private String filePath;
 
     @Override
-    public void uploadCrowd(MultipartHttpServletRequest request, String crowdTitle, int destinationAmount) {
+    public void uploadCrowd(/* MultipartHttpServletRequest request,*/ String crowdTitle, int destinationAmount) {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
@@ -51,9 +51,9 @@ public class CrowdServiceImpl implements CrowdService {
                 .build()
         );
 
-       /* for (MultipartFile file : request.getFiles("files")) {
+       /*for (MultipartFile file : request.getFiles("files")) {
             try {
-                file.transferTo(new File(filePath + crowd.getId().toString() + file.getOriginalFilename()));
+                file.transferTo(new File("classpath:/"+ crowd.getId().toString() + file.getOriginalFilename()));
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new FileUploadFailedException();
@@ -101,7 +101,7 @@ public class CrowdServiceImpl implements CrowdService {
         List<Crowd> crowds = crowdRepository.findAll();
 
         for (Crowd crowd : crowds) {
-             //try {
+             try {
                 responses.add(CrowdListResponse.builder()
                         .companyName(crowd.getCompanyName())
                         .crowdId(crowd.getId())
@@ -109,12 +109,12 @@ public class CrowdServiceImpl implements CrowdService {
                         .hashTag(crowd.getHashTag())
                         .destinationAmount(crowd.getDestinationAmount())
                         .nowAmount(crowd.getNowAmount())
-                        // .previewImage(new MockMultipartFile("preview.png", new FileInputStream(filePath + crowd.getId() + "/" + "preview.png")))
+                        .previewImage(new MockMultipartFile("preview.png", new FileInputStream(filePath + crowd.getId() + "/" + "preview.png")))
                         .build()
                 );
-            //}  catch (IOException e) {
-                //throw new FileIsNotFoundException();
-             //}
+            }  catch (IOException e) {
+                throw new FileIsNotFoundException();
+             }
         }
 
         return responses;

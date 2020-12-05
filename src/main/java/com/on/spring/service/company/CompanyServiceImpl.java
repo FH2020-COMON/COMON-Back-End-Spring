@@ -67,18 +67,14 @@ public class CompanyServiceImpl implements CompanyService {
 
         userRepository.save(user.switchOwner().setCompany(company));
     }
-
-/*
-    @Override
+    /*
     public void addUserToCompany(String email, Long companyId) {
         companyRepository.findByCompanyId(companyId)
                 .map(company -> company.addUser(userRepository.findByEmail(email)
                             .orElseThrow(UserNotFoundException::new)))
                 .map(companyRepository::save)
                 .orElseThrow(CompanyNotFoundException::new);
-    }
-
- */
+    }*/
 
     @Override
     public List<MemberResponse> viewCompanyMember(Long companyId) {
