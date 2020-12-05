@@ -35,6 +35,8 @@ public class CrowdServiceImpl implements CrowdService {
 
     @Override
     public void uploadCrowd(List<MultipartFile> files, String crowdTitle, int destinationAmount) {
+        System.out.println(files != null);
+
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
@@ -49,23 +51,6 @@ public class CrowdServiceImpl implements CrowdService {
                 .nowAmount(0)
                 .build()
         );
-
-        try {
-            int cur = 1;
-            files.get(0).transferTo(new File(filePath + "crowd/" + crowd.getId() + "/preview.png"));
-            files.remove(0);
-            for (MultipartFile file : files) {
-                try {
-                    file.transferTo(new File(filePath + "crowd/" + crowd.getId() + "/" + cur + ".png"));
-                } catch (IOException e) {
-                    System.out.println("File Upload Failed!!");
-                    throw new FileUploadFailedException();
-                }
-                cur++;
-            }
-        } catch (IOException e) {
-            throw new FileUploadFailedException();
-        }
     }
 
     @Override
