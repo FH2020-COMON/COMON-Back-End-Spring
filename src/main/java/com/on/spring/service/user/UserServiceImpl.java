@@ -93,6 +93,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public MyPageResponse viewMyPage() {
+        System.out.println(authenticationFacade.getUserEmail());
         return userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .map(user ->
                     MyPageResponse.builder()
