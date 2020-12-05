@@ -118,15 +118,22 @@ public class ApplyServiceImpl implements ApplyService {
         applyRepository.findAll().forEach(apply ->  {
             Duration diffTime = Duration.between(apply.getDate(), LocalDateTime.now());
 
+            Company company = companyRepository.findByCompanyId(apply.getCompanyId())
+                    .orElseThrow(CompanyNotFoundException::new);
+            try {
                 responses.add(
-                ApplyListResponse.builder()
-                    .applyName(apply.getApplyName())
-                    .companyName(apply.getCompanyName())
-                    .companyId(apply.getCompanyId())
-                    .dDay(diffTime.toDays())
-                        .likes(companyRepository.findByCompanyId(apply.getCompanyId()).map(Company::getLikes).orElseThrow(CompanyNotFoundException::new))
-                        .build()
+                        ApplyListResponse.builder()
+                                .applyName(apply.getApplyName())
+                                .companyName(apply.getCompanyName())
+                                .companyId(apply.getCompanyId())
+                                .dDay(diffTime.toDays())
+                                .likes(company.getLikes())
+                                .preview(new MockMultipartFile("preview.png", new FileInputStream(filePath + apply.getApplyId() + "/" + "preview.png")))
+                                .build()
                 );
+            } catch (IOException e) {
+                throw new FileIsNotFoundException();
+            }
         });
 
         return responses;
