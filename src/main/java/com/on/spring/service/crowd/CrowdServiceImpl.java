@@ -34,11 +34,11 @@ public class CrowdServiceImpl implements CrowdService {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        System.out.println(request.getCrowdTitle() + request.getDestinationAmount());
+        System.out.println(request.getCrowdName() + request.getDestinationAmount());
 
         Crowd crowd = crowdRepository.save(
                 Crowd.builder().companyId(user.getCompany().getCompanyId())
-                        .crowdName(request.getCrowdTitle())
+                        .crowdName(request.getCrowdName())
                         .hashTag("##")
                 .companyName(user.getCompany().getCompanyName())
                 .destinationAmount(request.getDestinationAmount())
