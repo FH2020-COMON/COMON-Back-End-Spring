@@ -43,7 +43,7 @@ public class CrowdServiceImpl implements CrowdService {
 
         Crowd crowd = crowdRepository.save(
                 Crowd.builder().companyId(user.getCompany().getCompanyId())
-                .companyName(request.getCompanyName())
+                .companyName(user.getCompany().getCompanyName())
                 .destinationAmount(request.getDestinationAmount())
                 .nowAmount(0)
                 .build()

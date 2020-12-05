@@ -7,7 +7,6 @@ import java.util.List;
 
 @Getter
 public class UploadCrowdRequest {
-    private String companyName;
     private String crowdTitle;
     private int destinationAmount;
     private List<MultipartFile> files;
