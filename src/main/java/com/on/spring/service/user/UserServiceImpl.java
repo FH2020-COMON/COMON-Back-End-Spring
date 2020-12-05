@@ -11,7 +11,7 @@ import com.on.spring.payload.response.GrassResponse;
 import com.on.spring.payload.response.MyPageResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthenticationFacade authenticationFacade;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public GrassResponse[] viewUserGrass(String userEmail) {
