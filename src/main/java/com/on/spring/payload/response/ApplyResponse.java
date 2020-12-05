@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 public class ApplyResponse {
     private String companyName;
     private String applyName;
-    private String date;
     private Long companyId;
     private Long applyId;
     private Long dDay;

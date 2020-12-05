@@ -61,12 +61,14 @@ public class ApplyServiceImpl implements ApplyService {
     public ApplyResponse viewApply(Long applyId) {
         return applyRepository.findByApplyId(applyId)
                 .map(apply -> {
-                    Duration diffTime = Duration.between(apply.getDate(), LocalDateTime.now());
                     return ApplyResponse.builder()
                             .applyId(apply.getApplyId())
                             .applyName(apply.getApplyName())
                             .companyName(apply.getCompanyName())
-                            .date(diffTime.toString())
+                            .hashTag(apply.getHashTag())
+                            .companyId(apply.getCompanyId())
+                            .dDay(Duration.between(apply.getDate(), LocalDateTime.now()).toDays())
+                            .likes(companyRepository.findByCompanyId(apply.getCompanyId()).orElseThrow(CompanyNotFoundException::new).getLikes())
                             .hashTag(apply.getHashTag())
                             .build();
                 })
