@@ -56,4 +56,9 @@ public class User {
         this.userType = UserType.EXECUTIVE;
         return this;
     }
+
+    public User setCompany(Company company) {
+        this.company = company;
+        return this;
+    }
 }

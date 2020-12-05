@@ -30,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class CompanyServiceImpl implements CompanyService {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        companyRepository.save(
+        Company company = companyRepository.save(
                 Company.builder()
                 .ownerEmail(user.getEmail())
                 .companyName(request.getName())
@@ -66,7 +65,7 @@ public class CompanyServiceImpl implements CompanyService {
                 .build()
         );
 
-        userRepository.save(user.switchOwner());
+        userRepository.save(user.switchOwner().setCompany(company));
     }
 
 /*
