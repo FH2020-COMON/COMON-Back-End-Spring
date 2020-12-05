@@ -30,9 +30,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -88,7 +90,7 @@ public class CompanyServiceImpl implements CompanyService {
                     for (User user : company.getUsers()) {
                         members.add(MemberResponse.builder()
                                 .email(user.getEmail())
-                                .grassResponse(userService.viewUserGrass())
+                                .grassResponse(Arrays.asList(userService.viewUserGrass()))
                                 .name(user.getName())
                                 .build());
                     }

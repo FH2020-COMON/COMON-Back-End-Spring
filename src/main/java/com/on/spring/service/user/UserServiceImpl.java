@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -105,7 +107,7 @@ public class UserServiceImpl implements UserService {
                     return MyPageResponse.builder()
                             .companyName(companyName)
                             .name(user.getName())
-                            .grass(viewUserGrass())
+                            .grass(Arrays.asList(viewUserGrass()))
                             .build();
                 })
                 .orElseThrow(UserNotFoundException::new);
