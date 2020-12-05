@@ -5,12 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter @NoArgsConstructor @AllArgsConstructor @Builder
-public class ApplyResponse {
+@Getter @AllArgsConstructor @NoArgsConstructor @Builder
+public class TopApplyResponse {
     private String companyName;
     private String applyName;
-    private String date;
-    private Long companyId;
     private Long applyId;
     private Long dDay;
     private Long likes;

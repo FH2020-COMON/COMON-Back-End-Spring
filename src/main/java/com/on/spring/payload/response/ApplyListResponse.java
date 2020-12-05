@@ -15,6 +15,7 @@ public class ApplyListResponse {
     private Long applyId;
     private Long dDay;
     private Long likes;
+    private String hashTag;
 
     private String previewPath;
 }

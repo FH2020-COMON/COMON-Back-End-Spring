@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface CompanyRepository extends CrudRepository<Company, Long> {
     public Optional<Company> findByCompanyId(Long companyId);
-    public List<Company> findAll(Pageable pageable);
+    public List<Company> findAllByOrderByLikes();
 }

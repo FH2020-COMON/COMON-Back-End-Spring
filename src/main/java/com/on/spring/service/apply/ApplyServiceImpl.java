@@ -13,6 +13,7 @@ import com.on.spring.exception.UserNotFoundException;
 import com.on.spring.payload.request.AddApplyRequest;
 import com.on.spring.payload.response.ApplyResponse;
 import com.on.spring.payload.response.ApplyListResponse;
+import com.on.spring.payload.response.TopApplyResponse;
 import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
@@ -64,6 +64,7 @@ public class ApplyServiceImpl implements ApplyService {
                 .map(apply -> {
                     Duration diffTime = Duration.between(apply.getDate(), LocalDateTime.now());
                     return ApplyResponse.builder()
+                            .applyId(apply.getApplyId())
                             .applyName(apply.getApplyName())
                             .companyName(apply.getCompanyName())
                             .date(diffTime.toString())
@@ -71,6 +72,33 @@ public class ApplyServiceImpl implements ApplyService {
                             .build();
                 })
                 .orElseThrow(ApplyNotFoundException::new);
+    }
+
+    @Override
+    public List<TopApplyResponse> topApplyResponses() {
+        List<TopApplyResponse> responses = new ArrayList<>();
+
+        int cur = 0;
+
+        for (Company company : companyRepository.findAllByOrderByLikes()) {
+            if (cur > 3)
+                break;
+
+            Apply apply = applyRepository.findAllByCompanyId(company.getCompanyId()).get(0);
+
+            responses.add(TopApplyResponse.builder()
+                    .applyId(apply.getApplyId())
+                    .applyName(apply.getApplyName())
+                    .companyName(company.getCompanyName())
+                    .dDay(Duration.between(apply.getDate(), LocalDateTime.now()).toDays())
+                    .hashTag(apply.getHashTag())
+                    .likes(company.getLikes())
+                    .build());
+
+            cur++;
+        }
+
+        return responses;
     }
 
     @Override
