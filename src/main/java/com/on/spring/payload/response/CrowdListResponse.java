@@ -12,6 +12,8 @@ public class CrowdListResponse {
     private Long crowdId;
     private String companyName;
     private String hashTag;
+    private int nowAmount;
+    private int destinationAmount;
 
     private MultipartFile previewImage;
 }

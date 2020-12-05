@@ -65,7 +65,7 @@ public class CrowdServiceImpl implements CrowdService {
     public CrowdResponse viewCrowd(Long crowdId) {
         return crowdRepository.findById(crowdId)
                 .map(crowd -> {
-                            /*List<MultipartFile> files = new ArrayList<>();
+                            List<MultipartFile> files = new ArrayList<>();
 
                             int cur = crowd.getImageNum();
                             try {
@@ -75,7 +75,7 @@ public class CrowdServiceImpl implements CrowdService {
                                 }
                             } catch (IOException e) {
                                 throw new FileIsNotFoundException();
-                            } */
+                            }
 
                             return CrowdResponse.builder()
                                     .hashTag(crowd.getHashTag())
@@ -83,7 +83,7 @@ public class CrowdServiceImpl implements CrowdService {
                                     .companyName(crowd.getCompanyName())
                                     .destinationAmount(crowd.getDestinationAmount())
                                     .nowAmount(crowd.getNowAmount())
-                                    // .images(files)
+                                    .images(files)
                                     .build();
                         }
                     )
@@ -101,18 +101,20 @@ public class CrowdServiceImpl implements CrowdService {
         List<Crowd> crowds = crowdRepository.findAll();
 
         for (Crowd crowd : crowds) {
-             //try {
+             try {
                 responses.add(CrowdListResponse.builder()
                         .companyName(crowd.getCompanyName())
                         .crowdId(crowd.getId())
                         .crowdName(crowd.getCrowdName())
                         .hashTag(crowd.getHashTag())
-                        // .previewImage(new MockMultipartFile("preview.png", new FileInputStream(filePath + crowd.getId() + "/" + "preview.png")))
+                        .destinationAmount(crowd.getDestinationAmount())
+                        .nowAmount(crowd.getNowAmount())
+                        .previewImage(new MockMultipartFile("preview.png", new FileInputStream(filePath + crowd.getId() + "/" + "preview.png")))
                         .build()
                 );
-           // }  catch (IOException e) {
-             //   throw new FileIsNotFoundException();
-            // }
+            }  catch (IOException e) {
+                throw new FileIsNotFoundException();
+             }
         }
 
         return responses;
