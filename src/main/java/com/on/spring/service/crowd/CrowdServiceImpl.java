@@ -1,13 +1,19 @@
 package com.on.spring.service.crowd;
 
+import com.on.spring.entity.company.Company;
+import com.on.spring.entity.company.CompanyRepository;
 import com.on.spring.entity.crowd.Crowd;
 import com.on.spring.entity.crowd.CrowdRepository;
+import com.on.spring.entity.user.User;
+import com.on.spring.entity.user.UserRepository;
 import com.on.spring.exception.CrowdNotFoundException;
 import com.on.spring.exception.FileIsNotFoundException;
 import com.on.spring.exception.FileUploadFailedException;
+import com.on.spring.exception.UserNotFoundException;
 import com.on.spring.payload.request.UploadCrowdRequest;
 import com.on.spring.payload.response.CrowdListResponse;
 import com.on.spring.payload.response.CrowdResponse;
+import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mock.web.MockMultipartFile;
@@ -24,14 +30,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CrowdServiceImpl implements CrowdService {
     private final CrowdRepository crowdRepository;
+    private final UserRepository userRepository;
+    private final AuthenticationFacade authenticationFacade;
 
     @Value("${spring.file.path}")
     private String filePath;
 
     @Override
     public void uploadCrowd(UploadCrowdRequest request) {
-        Crowd crowd = crowdRepository.save(
-                Crowd.builder()
+        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
+                .orElseThrow(UserNotFoundException::new);
+
+        crowdRepository.save(
+                Crowd.builder().companyId(user.getCompany().getCompanyId())
                 .companyName(request.getCompanyName())
                 .destinationAmount(request.getDestinationAmount())
                 .nowAmount(0)
