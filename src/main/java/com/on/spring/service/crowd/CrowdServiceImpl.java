@@ -35,7 +35,7 @@ public class CrowdServiceImpl implements CrowdService {
     private String filePath;
 
     @Override
-    public void uploadCrowd(UploadCrowdRequest request, List<MultipartFile> files) {
+    public void uploadCrowd(UploadCrowdRequest request) {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
@@ -49,9 +49,9 @@ public class CrowdServiceImpl implements CrowdService {
 
         try {
             int cur = 1;
-            files.get(0).transferTo(new File(filePath + "crowd/" + crowd.getId() + "/preview.png"));
-            files.remove(0);
-            for (MultipartFile file : files) {
+            request.getFiles().get(0).transferTo(new File(filePath + "crowd/" + crowd.getId() + "/preview.png"));
+            request.getFiles().remove(0);
+            for (MultipartFile file : request.getFiles()) {
                 try {
                     file.transferTo(new File(filePath + "crowd/" + crowd.getId() + "/" + cur + ".png"));
                 } catch (IOException e) {
