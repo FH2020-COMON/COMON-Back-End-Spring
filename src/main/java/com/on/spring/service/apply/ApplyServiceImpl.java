@@ -122,7 +122,7 @@ public class ApplyServiceImpl implements ApplyService {
                                 .companyId(apply.getCompanyId())
                                 .dDay(diffTime.toDays())
                                 .likes(company.getLikes())
-                                // .previewPath(filePath + apply.getApplyId() + "/" + "preview.png")
+                                .previewPath(filePath + apply.getApplyId() + "/" + "preview.png")
                                 .build()
                 );
         });
