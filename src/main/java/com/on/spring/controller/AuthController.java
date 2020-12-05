@@ -15,7 +15,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping
-    public TokenResponse signIn(@RequestBody @Valid LoginRequest request) {
+    public String signIn(@RequestBody @Valid LoginRequest request) {
         System.out.println("email : " + request.getEmail() + "password : " + request.getPassword());
         return authService.login(request);
     }
