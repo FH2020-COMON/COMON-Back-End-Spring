@@ -20,9 +20,12 @@ public class AuthServiceImpl implements AuthService {
     public String login(LoginRequest request) {
         return userRepository.findByEmail(request.getEmail())
                 .filter(user -> passwordEncoder.matches(request.getPassword(), user.getPassword()))
+                .map(user -> {
+                    System.out.println(user.toString());
+                    return user;
+                })
                 .map(User::getEmail)
                 .map(email -> {
-                    System.out.println(email);
                     String accessToken = jwtTokenProvider.generateAccessToken(email);
                     System.out.println("access token : " + accessToken);
                     return accessToken;
