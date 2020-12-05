@@ -5,6 +5,7 @@ import com.on.spring.payload.response.CrowdListResponse;
 import com.on.spring.payload.response.CrowdResponse;
 import com.on.spring.service.crowd.CrowdService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,8 +22,9 @@ public class CrowdController {
         return crowdService.viewCrowdList();
     }
 
-    @PostMapping
-    public void uploadCrowd(@RequestBody UploadCrowdRequest request, @RequestParam("files") List<MultipartFile> files) {
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public void uploadCrowd(@RequestPart("user") UploadCrowdRequest request, @RequestParam("files") List<MultipartFile> files) {
+
         crowdService.uploadCrowd(request, files);
     }
 
