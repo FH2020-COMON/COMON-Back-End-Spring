@@ -84,21 +84,21 @@ public class ApplyServiceImpl implements ApplyService {
                 break;
 
             List<Apply> applies = applyRepository.findAllByCompanyId(company.getCompanyId());
-
-            if (applies.get(0) == null) {
+            if (applies.get(0) == null)
                 continue;
+
+            else {
+                Apply apply = applies.get(0);
+
+                responses.add(TopApplyResponse.builder()
+                        .likes(company.getLikes())
+                        .hashTag(apply.getHashTag())
+                        .companyName(company.getCompanyName())
+                        .dDay(Duration.between(apply.getDate(), LocalDateTime.now()).toDays())
+                        .applyName(apply.getApplyName())
+                        .applyId(apply.getApplyId())
+                        .build());
             }
-
-            Apply apply = applies.get(0);
-
-            responses.add(TopApplyResponse.builder()
-                    .applyId(apply.getApplyId())
-                    .applyName(apply.getApplyName())
-                    .companyName(company.getCompanyName())
-                    .dDay(Duration.between(apply.getDate(), LocalDateTime.now()).toDays())
-                    .hashTag(apply.getHashTag())
-                    .likes(company.getLikes())
-                    .build());
 
             cur++;
         }
