@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping
-    public void registerCompany(@RequestBody RegisterCompanyRequest request) {
+    public void registerCompany(@RequestBody @Valid RegisterCompanyRequest request) {
         System.out.println(request.getAddress());
         System.out.println(request.getName());
         companyService.registerCompany(request);
