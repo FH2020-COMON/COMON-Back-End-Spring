@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Getter @AllArgsConstructor @NoArgsConstructor
+@Getter
 public class AddApplyRequest {
     private String applyName;
     private int year;
