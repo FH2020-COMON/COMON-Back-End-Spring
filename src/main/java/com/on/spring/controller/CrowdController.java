@@ -22,7 +22,7 @@ public class CrowdController {
 
     @PostMapping("/{crowdTitle}/{destinationAmount}")
     public void uploadCrowd(MultipartHttpServletRequest request, @PathVariable String crowdTitle, @PathVariable String destinationAmount) {
-        crowdService.uploadCrowd(files, crowdTitle, Integer.parseInt(destinationAmount));
+        crowdService.uploadCrowd(request, crowdTitle, Integer.parseInt(destinationAmount));
     }
 
     @GetMapping("/{crowdId}")
