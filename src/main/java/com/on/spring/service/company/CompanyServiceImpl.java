@@ -53,11 +53,9 @@ public class CompanyServiceImpl implements CompanyService {
     private String filePath;
 
     public void registerCompany(RegisterCompanyRequest request) {
-        System.out.println(authenticationFacade.getUserEmail());
+        System.out.println(request.getCompanyAddress() + request.getCompanyName());
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
-
-        userRepository.save(user.switchOwner());
 
         companyRepository.save(
                 Company.builder()
@@ -67,6 +65,8 @@ public class CompanyServiceImpl implements CompanyService {
                 .likes(0L)
                 .build()
         );
+
+        userRepository.save(user.switchOwner());
     }
 
 /*
