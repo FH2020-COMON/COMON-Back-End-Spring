@@ -53,7 +53,6 @@ public class CompanyServiceImpl implements CompanyService {
     private String filePath;
 
     public void registerCompany(RegisterCompanyRequest request) {
-        System.out.println(request.getCompanyAddress() + request.getCompanyName());
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
