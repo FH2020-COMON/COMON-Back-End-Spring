@@ -29,7 +29,7 @@ public class CrowdController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public void uploadCrowd(@RequestPart("user") String user, @RequestParam("files") List<MultipartFile> files) {
-        UploadCrowdRequest request = new UploadCrowdRequest();
+        UploadCrowdRequest request;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             request = objectMapper.readValue(user, UploadCrowdRequest.class);
