@@ -20,12 +20,14 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping
-    public void registerCompany(RegisterCompanyRequest request) {
+    public void registerCompany(@RequestBody RegisterCompanyRequest request) {
+        System.out.println(request.getCompanyAddress());
+        System.out.println(request.getCompanyName());
         companyService.registerCompany(request);
     }
 
     @PostMapping("/{companyId}")
-    public void companyLogo(MultipartFile file, @PathVariable long companyId) {
+    public void companyLogo(@RequestBody MultipartFile file, @PathVariable long companyId) {
         companyService.uploadCompanyPreviewImage(file, companyId);
     }
 
