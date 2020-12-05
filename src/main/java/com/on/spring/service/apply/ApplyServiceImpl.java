@@ -48,6 +48,7 @@ public class ApplyServiceImpl implements ApplyService {
 
         Apply apply = applyRepository.save(
                 Apply.builder()
+                        .applyName(request.getApplyName())
                         .companyId(user.getCompany().getCompanyId())
                         .companyName(user.getCompany().getCompanyName())
                         .date(LocalDateTime.of(request.getYear(), request.getMonth(), request.getDay(), request.getHour(), request.getMinute()))
