@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String login(LoginRequest request) {
         return userRepository.findByEmail(request.getEmail())
-                .filter(user -> passwordEncoder.matches(request.getPassword(), user.getPassword()))
+                .filter(user -> passwordEncoder.matches(user.getPassword(), request.getPassword()))
                 .map(User::getEmail)
                 .map(email -> {
                     String accessToken = jwtTokenProvider.generateAccessToken(email);
