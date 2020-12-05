@@ -21,8 +21,8 @@ public class AuthController {
         return authService.login(request);
     }
 
-    @GetMapping("/{accessToken}")
-    public String getUserEmail(@PathVariable String accessToken) {
+    @GetMapping("/")
+    public String getUserEmail(String accessToken) {
         System.out.println("Email : " + jwtTokenProvider.getEmail(accessToken));
         return jwtTokenProvider.getEmail(accessToken);
     }
