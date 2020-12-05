@@ -11,4 +11,5 @@ public interface CrowdService {
     public List<CrowdListResponse> viewCrowdList();
     public CrowdResponse viewCrowd(Long crowdId);
     public List<CrowdListResponse> viewCompanyCrowdList(Long companyId);
+    public void addCrowd(Long crowdId, Long crowdAmount);
 }

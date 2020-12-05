@@ -112,4 +112,15 @@ public class CrowdServiceImpl implements CrowdService {
 
         return responses;
     }
+
+    @Override
+    public void addCrowd(Long crowdId, Long crowdAmount) {
+        crowdRepository.findById(crowdId)
+                .map(crowd -> {
+                    crowd.addAmount(crowdAmount);
+                    return crowd;
+                })
+                .map(crowdRepository::save)
+                .orElseThrow(CrowdNotFoundException::new);
+    }
 }

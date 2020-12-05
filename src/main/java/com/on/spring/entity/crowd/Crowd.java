@@ -33,4 +33,8 @@ public class Crowd {
 
     @Column(nullable = false)
     private int imageNum;
+
+    public void addAmount(Long amount) {
+        this.nowAmount += amount;
+    }
 }

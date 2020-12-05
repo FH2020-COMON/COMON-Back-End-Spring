@@ -29,4 +29,9 @@ public class CrowdController {
     public CrowdResponse viewCrowd(@PathVariable Long crowdId) {
         return crowdService.viewCrowd(crowdId);
     }
+
+    @GetMapping("/{crowdId}")
+    public void addCrowd(@PathVariable Long crowdId, Long amount) {
+        crowdService.addCrowd(crowdId, amount);
+    }
 }
