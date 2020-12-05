@@ -21,6 +21,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +55,9 @@ public class CrowdServiceImpl implements CrowdService {
         );
 
         try {
-            file.transferTo(new File(filePath + crowd.getId().toString()));
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(filePath + "crowd/" + crowd.getId().toString() + "/" + file.getOriginalFilename());
+            Files.write(path, bytes);
         } catch (IOException e) {
             throw new FileUploadFailedException();
         }
