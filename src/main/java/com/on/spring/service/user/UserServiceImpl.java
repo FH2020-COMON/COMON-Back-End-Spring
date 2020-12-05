@@ -95,12 +95,16 @@ public class UserServiceImpl implements UserService {
     public MyPageResponse viewMyPage() {
         System.out.println(authenticationFacade.getUserEmail());
         return userRepository.findByEmail(authenticationFacade.getUserEmail())
-                .map(user ->
-                    MyPageResponse.builder()
-                            .companyName(user.getCompany().getCompanyName())
+                .map(user -> {
+                    String companyName = user.getCompany().getCompanyName();
+                    if (companyName == null)
+                        companyName = "등록된 회사 없음";
+                    return MyPageResponse.builder()
+                            .companyName(companyName)
                             .name(user.getName())
                             .grass(viewUserGrass())
-                            .build())
+                            .build();
+                })
                 .orElseThrow(UserNotFoundException::new);
     }
 }
