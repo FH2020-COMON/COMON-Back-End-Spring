@@ -30,9 +30,6 @@ public class Company {
     private String companyAddress;
 
     @Column(nullable = false)
-    private String companyNumber;
-
-    @Column(nullable = false)
     private Long likes;
 
     public Company addUser(User user) {

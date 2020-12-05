@@ -64,7 +64,6 @@ public class CompanyServiceImpl implements CompanyService {
                 .ownerEmail(user.getEmail())
                 .companyName(request.getCompanyName())
                         .companyAddress(request.getCompanyAddress())
-                        .companyNumber(request.getCompanyNumber())
                 .likes(0L)
                 .build()
         );

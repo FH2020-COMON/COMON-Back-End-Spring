@@ -8,5 +8,4 @@ import java.util.List;
 public class RegisterCompanyRequest {
     private String companyName;
     private String companyAddress;
-    private String companyNumber;
 }
