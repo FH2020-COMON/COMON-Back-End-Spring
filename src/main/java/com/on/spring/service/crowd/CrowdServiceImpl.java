@@ -34,7 +34,7 @@ public class CrowdServiceImpl implements CrowdService {
     private String filePath;
 
     @Override
-    public void uploadCrowd(List<MultipartFile> files, String crowdTitle, int destinationAmount) throws IOException {
+    public void uploadCrowd(List<MultipartFile> files, String crowdTitle, int destinationAmount) {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
