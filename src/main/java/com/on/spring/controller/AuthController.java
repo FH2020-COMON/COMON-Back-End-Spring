@@ -19,9 +19,4 @@ public class AuthController {
     public TokenResponse signIn(@RequestBody @Valid LoginRequest request) {
         return authService.login(request);
     }
-
-    @PutMapping
-    public AccessTokenResponse tokenRefresh(@RequestHeader("X-Refresh-Token") String refreshToken) {
-        return authService.tokenRefresh(refreshToken);
-    }
 }
