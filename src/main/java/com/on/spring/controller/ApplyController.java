@@ -27,7 +27,7 @@ public class ApplyController {
     }
 
     @GetMapping("/image/{applyId}")
-    public List<MultipartFile> viewApplyImages(@PathVariable Long applyId) {
+    public List<String> viewApplyImages(@PathVariable Long applyId) {
         return applyService.viewApplyImages(applyId);
     }
 

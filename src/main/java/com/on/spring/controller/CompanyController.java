@@ -50,7 +50,7 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}/board/{boardId}")
-    public MultipartFile viewBoard(@PathVariable long companyId, @PathVariable long boardId) {
+    public String viewBoard(@PathVariable long companyId, @PathVariable long boardId) {
         return companyService.viewBoard(companyId, boardId);
     }
 
