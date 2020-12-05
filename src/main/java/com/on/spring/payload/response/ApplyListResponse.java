@@ -14,5 +14,4 @@ public class ApplyListResponse {
     private Long applyId;
     private Long dDay;
     private Long likes;
-    private MultipartFile previewImage;
 }
