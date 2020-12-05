@@ -18,7 +18,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String login(LoginRequest request) {
-        System.out.println(userRepository.findByEmail(request.getEmail()).get());
+        System.out.println(userRepository.findByEmail(request.getEmail()).get().toString());
         return userRepository.findByEmail(request.getEmail())
                 .filter(user -> passwordEncoder.matches(request.getPassword(), user.getPassword()))
                 .map(User::getEmail)
