@@ -14,6 +14,4 @@ public class CrowdResponse {
     private int nowAmount;
     private int destinationAmount;
     private String hashTag;
-
-    private List<MultipartFile> images;
 }

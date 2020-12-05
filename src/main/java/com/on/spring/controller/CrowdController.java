@@ -1,5 +1,6 @@
 package com.on.spring.controller;
 
+import com.on.spring.payload.request.UploadCrowdRequest;
 import com.on.spring.payload.response.CrowdListResponse;
 import com.on.spring.payload.response.CrowdResponse;
 import com.on.spring.service.crowd.CrowdService;
@@ -21,9 +22,9 @@ public class CrowdController {
         return crowdService.viewCrowdList();
     }
 
-    @PostMapping("/{crowdTitle}/{destinationAmount}")
-    public void uploadCrowd(MultipartFile request, @PathVariable String crowdTitle, @PathVariable String destinationAmount) {
-        crowdService.uploadCrowd(request, crowdTitle, Integer.parseInt(destinationAmount));
+    @PostMapping
+    public void uploadCrowd(UploadCrowdRequest request) {
+        crowdService.uploadCrowd(request);
     }
 
     @GetMapping("/{crowdId}")

@@ -193,23 +193,17 @@ public class CompanyServiceImpl implements CompanyService {
         else {
             targetCategory = categoryRepository.save(
                     Category.builder()
-                    .categoryName(request.getCategory())
-                    .companyId(companyId)
-                    .build()
+                            .categoryName(request.getCategory())
+                            .companyId(companyId)
+                            .build()
             );
 
             board = boardRepository.save(
                     Board.builder()
-                    .name(request.getBoardName())
-                    .category(targetCategory)
-                    .build()
+                            .name(request.getBoardName())
+                            .category(targetCategory)
+                            .build()
             );
-        }
-
-        try {
-            file.transferTo(new File(filePath + "board" + companyId + "/" + board.getId() + "/" + "read.md"));
-        } catch (IOException e) {
-            throw new FileUploadFailedException();
         }
     }
 

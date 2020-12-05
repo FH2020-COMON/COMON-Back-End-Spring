@@ -40,7 +40,7 @@ public class ApplyServiceImpl implements ApplyService {
     private String filePath;
 
     @Override
-    public void uploadApply(AddApplyRequest request, List<MultipartFile> files) {
+    public void uploadApply(AddApplyRequest request) {
         int cur = 1;
 
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
@@ -54,23 +54,6 @@ public class ApplyServiceImpl implements ApplyService {
                         .imageNum(0)
                         .hashTag(request.getHashTag())
                         .build()
-        );
-
-        Long applyId = apply.getApplyId();
-
-        try {
-            files.get(0).transferTo(new File( filePath + "apply/" + applyId + "/" + "preview.png"));
-            files.remove(0);
-            for (MultipartFile file : files) {
-                file.transferTo(new File(filePath + "apply/"+ applyId + "/" + cur + ".png"));
-                cur++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        applyRepository.save(
-            apply.addImageNum(cur)
         );
     }
 
@@ -131,7 +114,6 @@ public class ApplyServiceImpl implements ApplyService {
                                 .companyId(apply.getCompanyId())
                                 .dDay(diffTime.toDays())
                                 .likes(company.getLikes())
-                                .previewPath(filePath + apply.getApplyId() + "/" + "preview.png")
                                 .build()
                 );
         });
