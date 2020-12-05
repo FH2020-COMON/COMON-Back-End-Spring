@@ -60,7 +60,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         companyRepository.save(
                 Company.builder()
-                .ceoName(user.getName())
+                .ownerEmail(user.getEmail())
                 .companyName(request.getCompanyName())
                 .likes(0L)
                 .build()

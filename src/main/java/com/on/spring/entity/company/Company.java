@@ -21,7 +21,7 @@ public class Company {
     private String companyName;
 
     @Column(nullable = false)
-    private String ceoName;
+    private String ownerEmail;
 
     @OneToMany(mappedBy = "company", targetEntity = User.class)
     private final List<User> users = new ArrayList<>();
