@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,7 +35,7 @@ public class CrowdServiceImpl implements CrowdService {
     private String filePath;
 
     @Override
-    public void uploadCrowd(List<MultipartFile> files, String crowdTitle, int destinationAmount) {
+    public void uploadCrowd(MultipartHttpServletRequest request, String crowdTitle, int destinationAmount) {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
@@ -49,11 +50,14 @@ public class CrowdServiceImpl implements CrowdService {
                 .nowAmount(0)
                 .build()
         );
-        try {
-            files.get(0).transferTo(new File(filePath + crowd.getId() + "/preview.png"));
-            files.get(1).transferTo(new File(filePath + crowd.getId() + "1.png"));
-        } catch (IOException e) {
-            throw new FileUploadFailedException();
+
+        for (MultipartFile file : request.getFiles("files")) {
+            try {
+                file.transferTo(new File(filePath + crowd.getId().toString() + file.getOriginalFilename()));
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new FileUploadFailedException();
+            }
         }
     }
 

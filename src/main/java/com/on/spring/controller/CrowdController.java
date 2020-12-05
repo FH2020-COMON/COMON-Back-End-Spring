@@ -5,7 +5,8 @@ import com.on.spring.payload.response.CrowdResponse;
 import com.on.spring.service.crowd.CrowdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class CrowdController {
     }
 
     @PostMapping("/{crowdTitle}/{destinationAmount}")
-    public void uploadCrowd(@RequestParam(required = false) List<MultipartFile> files, @PathVariable String crowdTitle, @PathVariable String destinationAmount) {
+    public void uploadCrowd(MultipartHttpServletRequest request, @PathVariable String crowdTitle, @PathVariable String destinationAmount) {
         crowdService.uploadCrowd(files, crowdTitle, Integer.parseInt(destinationAmount));
     }
 
