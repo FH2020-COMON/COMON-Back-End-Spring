@@ -65,7 +65,7 @@ public class CrowdServiceImpl implements CrowdService {
     public CrowdResponse viewCrowd(Long crowdId) {
         return crowdRepository.findById(crowdId)
                 .map(crowd -> {
-                            List<MultipartFile> files = new ArrayList<>();
+                            /*List<MultipartFile> files = new ArrayList<>();
 
                             int cur = crowd.getImageNum();
                             try {
@@ -75,7 +75,7 @@ public class CrowdServiceImpl implements CrowdService {
                                 }
                             } catch (IOException e) {
                                 throw new FileIsNotFoundException();
-                            }
+                            } */
 
                             return CrowdResponse.builder()
                                     .hashTag(crowd.getHashTag())
@@ -83,7 +83,7 @@ public class CrowdServiceImpl implements CrowdService {
                                     .companyName(crowd.getCompanyName())
                                     .destinationAmount(crowd.getDestinationAmount())
                                     .nowAmount(crowd.getNowAmount())
-                                    .images(files)
+                                    // .images(files)
                                     .build();
                         }
                     )
