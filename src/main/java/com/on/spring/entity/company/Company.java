@@ -20,11 +20,17 @@ public class Company {
     @Column(nullable = false)
     private String companyName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String ownerEmail;
 
     @OneToMany(mappedBy = "company", targetEntity = User.class)
     private final List<User> users = new ArrayList<>();
+
+    @Column(nullable = false)
+    private String companyAddress;
+
+    @Column(nullable = false)
+    private String companyNumber;
 
     @Column(nullable = false)
     private Long likes;
