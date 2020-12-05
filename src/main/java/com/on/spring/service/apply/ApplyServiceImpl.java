@@ -4,12 +4,16 @@ import com.on.spring.entity.apply.Apply;
 import com.on.spring.entity.apply.ApplyRepository;
 import com.on.spring.entity.company.Company;
 import com.on.spring.entity.company.CompanyRepository;
+import com.on.spring.entity.user.User;
+import com.on.spring.entity.user.UserRepository;
 import com.on.spring.exception.ApplyNotFoundException;
 import com.on.spring.exception.CompanyNotFoundException;
 import com.on.spring.exception.FileIsNotFoundException;
+import com.on.spring.exception.UserNotFoundException;
 import com.on.spring.payload.request.AddApplyRequest;
 import com.on.spring.payload.response.ApplyResponse;
 import com.on.spring.payload.response.ApplyListResponse;
+import com.on.spring.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mock.web.MockMultipartFile;
@@ -29,6 +33,8 @@ import java.util.List;
 public class ApplyServiceImpl implements ApplyService {
     private final ApplyRepository applyRepository;
     private final CompanyRepository companyRepository;
+    private final UserRepository userRepository;
+    private final AuthenticationFacade authenticationFacade;
 
     @Value("${spring.file.path}")
     private String filePath;
@@ -37,10 +43,13 @@ public class ApplyServiceImpl implements ApplyService {
     public void uploadApply(AddApplyRequest request, List<MultipartFile> files) {
         int cur = 1;
 
+        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
+                .orElseThrow(UserNotFoundException::new);
+
         Apply apply = applyRepository.save(
                 Apply.builder()
-                        .companyId(request.getCompanyId())
-                        .companyName(request.getCompanyName())
+                        .companyId(user.getCompany().getCompanyId())
+                        .companyName(user.getCompany().getCompanyName())
                         .date(LocalDateTime.of(request.getYear(), request.getMonth(), request.getDay(), request.getHour(), request.getMinute()))
                         .imageNum(0)
                         .hashTag(request.getHashTag())
@@ -48,9 +57,9 @@ public class ApplyServiceImpl implements ApplyService {
         );
 
         Long applyId = apply.getApplyId();
-
+/*
         try {
-            files.get(0).transferTo(new File(filePath + "apply/" + applyId + "/" + "preview.png"));
+            files.get(0).transferTo(new File("" + "apply/" + applyId + "/" + "preview.png"));
             files.remove(0);
             for (MultipartFile file : files) {
                 file.transferTo(new File(filePath + "apply/"+ applyId + "/" + cur + ".png"));
@@ -62,7 +71,7 @@ public class ApplyServiceImpl implements ApplyService {
 
         applyRepository.save(
             apply.addImageNum(cur)
-        );
+        ); */
     }
 
     @Override

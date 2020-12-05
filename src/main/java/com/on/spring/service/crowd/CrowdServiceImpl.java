@@ -51,20 +51,20 @@ public class CrowdServiceImpl implements CrowdService {
                 .build()
         );
 
-        for (MultipartFile file : request.getFiles("files")) {
+       /* for (MultipartFile file : request.getFiles("files")) {
             try {
                 file.transferTo(new File(filePath + crowd.getId().toString() + file.getOriginalFilename()));
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new FileUploadFailedException();
             }
-        }
+        } */
     }
 
     @Override
     public CrowdResponse viewCrowd(Long crowdId) {
         return crowdRepository.findById(crowdId)
-                .map(crowd -> {
+                .map(crowd -> {/*
                             List<MultipartFile> files = new ArrayList<>();
 
                             int cur = crowd.getImageNum();
@@ -76,14 +76,14 @@ public class CrowdServiceImpl implements CrowdService {
                             } catch (IOException e) {
                                 throw new FileIsNotFoundException();
                             }
-
+*/
                             return CrowdResponse.builder()
                                     .hashTag(crowd.getHashTag())
                                     .crowdTitle(crowd.getCrowdName())
                                     .companyName(crowd.getCompanyName())
                                     .destinationAmount(crowd.getDestinationAmount())
                                     .nowAmount(crowd.getNowAmount())
-                                    .images(files)
+                                    // .images(files)
                                     .build();
                         }
                     )

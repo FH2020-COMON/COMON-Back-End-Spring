@@ -10,8 +10,6 @@ import java.util.List;
 @Getter @AllArgsConstructor @NoArgsConstructor
 public class AddApplyRequest {
     private String applyName;
-    private String companyName;
-    private Long companyId;
     private int year;
     private int month;
     private int day;
