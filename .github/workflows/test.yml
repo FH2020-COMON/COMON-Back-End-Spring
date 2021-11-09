@@ -5,11 +5,11 @@ on:
 
 name: Spring Boot Gradle Test
 env:
-  PROJECT_NAME: Deploy gradle
+  PROJECT_NAME: Test gradle
 
 jobs:
   deploy:
-    name: DEPLOY
+    name: TEST
     runs-on: ubuntu-18.04
 
     steps:
