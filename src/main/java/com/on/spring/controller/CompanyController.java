@@ -22,13 +22,11 @@ public class CompanyController {
 
     @PostMapping
     public void registerCompany(@RequestBody @Valid RegisterCompanyRequest request) {
-        System.out.println(request.getAddress());
-        System.out.println(request.getName());
         companyService.registerCompany(request);
     }
 
     @PostMapping("/{companyId}")
-    public void companyLogo(@RequestBody MultipartFile file, @PathVariable long companyId) {
+    public void companyLogo(@RequestPart MultipartFile file, @PathVariable long companyId) {
         companyService.uploadCompanyPreviewImage(file, companyId);
     }
 
